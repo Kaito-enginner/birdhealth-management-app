@@ -1,5 +1,4 @@
-import {} from "react";
-import { ApiFetch } from './components/ApiFetch.tsx'
+import { ApiFetch } from './components/ApiFetch.tsx';
 
 const MyPage = () => {
 	return (
