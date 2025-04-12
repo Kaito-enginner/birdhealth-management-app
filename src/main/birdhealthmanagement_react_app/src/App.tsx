@@ -1,19 +1,100 @@
+import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Home';
 import Chart from './Chart';
 import MyPage from './MyPage';
 import Login from './Login';
+import AppLayout from './components/layout/AppLayout';
+import { theme } from './theme/theme'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline';
+import { BirdPreview, MonthlyRecord, UserBirdDto } from './type/type'
+import NoMatch from './NoMatch';
+import { SelectChangeEvent } from '@mui/material/Select';
 
-function App() {
+const App = () => {
+	const [ selectedBird, setSelectedBird ] = useState<BirdPreview>()
+	const handleSelectedBird = (bird: BirdPreview): void => setSelectedBird(bird)
+	const [ userBirds, setUserBirds ] = useState<UserBirdDto>();
+	const [ reRender, setReRender ] = useState(false);
+	const [ monthlyRecords, setMonthlyRecords ] = useState<MonthlyRecord[]>();
+	const [ birdId, setBirdId ] = useState<number>();
+	const [ selectedPeriod, setSelectedPeriod ] = useState('');
+	
+	const birdHandleChange = (e: SelectChangeEvent) => {
+		setBirdId(parseInt(e.target.value));
+	};
+	
+	// 特定の愛鳥の特定の日付の健康記録を取得する
+	useEffect(() => {
+		if (birdId && selectedPeriod) {
+			fetch(`http://localhost:8080/chartpage/${birdId}/${selectedPeriod}`, {
+				method: 'GET'
+			})
+			  .then((res) => {
+				console.log(res)
+					return res.json()
+				})
+			  .then((data) => {
+					return setMonthlyRecords(data)
+				})
+			  .catch(error => console.error("リクエストエラー:", error));
+		  }
+	}, [birdId, selectedPeriod]);
+	
+	
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/mypage/:id' element={<MyPage />} />
-        <Route path='/chart' element={<Chart />} />
-      </Routes>
-    </Router>
+	<ThemeProvider theme={theme}>
+	<CssBaseline />
+		<Router>
+		  <Routes>
+		  	<Route path='/' element={<AppLayout />}>
+		  	<Route index path='/' element={<Login />} />
+			
+			<Route 
+			  path='/:id/home' 
+			  element={<Home 
+				monthlyRecords={monthlyRecords}
+				birdId={birdId}
+				userBirds={userBirds}
+				setUserBirds={setUserBirds} 
+				birdHandleChange={birdHandleChange}
+				reRender={reRender}
+				/>}
+			 />
+			  
+			 <Route 
+			  path='/:id/mypage' 
+			  element={<MyPage 
+				userBirds={userBirds} 
+				setUserBirds={setUserBirds} 
+				setSelectedBird={setSelectedBird} 
+				selectedBird={selectedBird} 
+				handleSelectedBird={handleSelectedBird}
+				setReRender={setReRender} 
+				reRender={reRender}
+				/>} 
+			 />
+			 
+			 <Route 
+			  path='/:id/chart' 
+			  element={<Chart 
+				userBirds={userBirds} 
+				setUserBirds={setUserBirds} 
+				reRender={reRender}
+				monthlyRecords={monthlyRecords}
+				birdId={birdId}
+				selectedPeriod={selectedPeriod}
+				setSelectedPeriod={setSelectedPeriod}
+				birdHandleChange={birdHandleChange}
+				/>}
+			 />
+			 
+			 <Route path='*' element={<NoMatch />} />
+			</Route>
+		  </Routes>
+		</Router>
+	</ThemeProvider>
   );
 }
 
