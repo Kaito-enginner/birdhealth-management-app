@@ -3,16 +3,15 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { BirdPreview, UserBirdDto } from "../type/type";
 
 
-
-
 interface UserAndBirdInformationProps {
 	reRender: boolean;
 	handleSelectedBird: (bird: BirdPreview) => void;
 	handleOpen: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	userBirds: UserBirdDto | undefined;
+	setSelectedUser: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const UserAndBirdInformation = ({handleSelectedBird, handleOpen, userBirds}: UserAndBirdInformationProps) => {
+export const UserAndBirdInformation = ({handleSelectedBird, handleOpen, userBirds, setSelectedUser}: UserAndBirdInformationProps) => {
 	return (
 	    <Box>
 	      {userBirds ? (
@@ -31,6 +30,7 @@ export const UserAndBirdInformation = ({handleSelectedBird, handleOpen, userBird
 								 variant="outlined"
 								 startIcon={<ModeEditIcon />}
 								 onClick={(e) => {
+									setSelectedUser(true)
 								 	handleOpen(e)
 								 }} 
 								>

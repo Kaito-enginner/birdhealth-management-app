@@ -81,7 +81,7 @@ export const BirdChart = ({userBirds, monthlyRecords, birdId, selectedPeriod, se
 	    labels,
 	    datasets: [
 	      {
-	        type: 'line' as const,
+	        type: 'line',
 	        label: '温度',
 	        borderColor: 'rgb(255, 99, 132)',
 	        borderWidth: 2,
@@ -89,7 +89,7 @@ export const BirdChart = ({userBirds, monthlyRecords, birdId, selectedPeriod, se
 	        data: monthlyTemperature,
 	      },
 	  	{
-	  	  type: 'line' as const,
+	  	  type: 'line',
 	  	  label: '湿度',
 	  	  borderColor: 'rgb(255, 99, 132)',
 	  	  borderWidth: 2,
@@ -97,15 +97,13 @@ export const BirdChart = ({userBirds, monthlyRecords, birdId, selectedPeriod, se
 	  	  data: monthlyHumidity,
 	  	},
 	      {
-	        type: 'bar' as const,
+	        type: 'bar',
 	        label: '体重',
 	        backgroundColor: 'rgb(75, 192, 192)',
 	        data: monthlyWeight,
-	        borderColor: 'white',
-	        borderWidth: 2,
 	      },
 	      {
-	        type: 'bar' as const,
+	        type: 'bar',
 	        label: '食事量',
 	        backgroundColor: 'rgb(53, 162, 235)',
 	        data: monthlyMealAmount,
@@ -120,8 +118,7 @@ export const BirdChart = ({userBirds, monthlyRecords, birdId, selectedPeriod, se
 		}
 	  },[monthlyRecords])
 	  
-//	const chartRef = useRef<ChartJS>(null);
-	
+	  	
 	return (
 		<Box>
 			<Paper sx={{p: '1.5rem', mb: '1rem'}}>

@@ -19,7 +19,20 @@
     "date-fns": "^4.1.0",
     "fontsource-noto-sans-jp": "^4.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@fullcalendar/daygrid": "^6.1.17",
+    "@fullcalendar/interaction": "^6.1.17",
+    "@fullcalendar/react": "^6.1.17",
+    "@fullcalendar/timegrid": "^6.1.17",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "chart.js": "^4.4.8",
+    "chartjs-plugin-zoom": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "react-chartjs-2": "^5.3.0",
+    "react-hook-form": "^7.55.0",
+    "react-router-dom": "^7.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
@@ -35,6 +48,6 @@
     "vite": "^6.2.0"
   },
   "resolutions": {
-  "@types/react": "^19.0.10"
+  "@types/react": "^19.0.4"
 }
 }

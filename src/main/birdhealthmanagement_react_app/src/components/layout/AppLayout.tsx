@@ -69,7 +69,7 @@ export default function AppLayout() {
 	  {/*メインコンテンツ*/}
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1, p: 3, width: { md: `calc(100% - ${drawerWidth}px)` , xs: '100vw' } }}
       >
         <Toolbar />
 		<Outlet />

@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import { BirdPreview, UserBirdDto } from "./type/type";
 import { useParams } from "react-router-dom";
 import { UserAndBirdInformation } from "./components/UserAndBirdInformation";
+import UserEditForm from "./components/form/UserEditForm";
 
 interface MyPageProps {
 	handleSelectedBird: (bird: BirdPreview) => void;
@@ -13,18 +14,18 @@ interface MyPageProps {
 	userBirds: UserBirdDto | undefined;
 	setUserBirds: React.Dispatch<React.SetStateAction<UserBirdDto | undefined>>;
 	reRender: boolean;
-	setReRender: React.Dispatch<React.SetStateAction<boolean>>;
+	handleReRender: () => void
 }
 
-const MyPage = ({handleSelectedBird, selectedBird, setSelectedBird, userBirds, setUserBirds, reRender, setReRender}: MyPageProps) => {
-	const [open, setOpen] = useState(false);
+const MyPage = ({handleSelectedBird, selectedBird, setSelectedBird, userBirds, setUserBirds, reRender, handleReRender}: MyPageProps) => {
+	const [ open, setOpen ] = useState(false);
 	const { id } = useParams(); // URLからidを取得
+	const [ selectedUser, setSelectedUser ] = useState(false)
 	
 	// フォームを開ける処理
 	const handleOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		setOpen(true);
 		if(e) {
-			console.log(e)
 			e.currentTarget.blur();
 		}
 	}
@@ -32,16 +33,15 @@ const MyPage = ({handleSelectedBird, selectedBird, setSelectedBird, userBirds, s
 	// フォームを閉じる処理
 	const handleClose = () => {
 		setOpen(false);
-		
-		if(selectedBird) {
-			setSelectedBird(undefined)
-		}
+		setSelectedBird(undefined)
+		setSelectedUser(false)
 	}
 	
 	// ユーザー＋愛鳥さんの情報を取得
 	useEffect(() => {
 			    fetch(`http://localhost:8080/mypage/${id}`, {
-					method: 'GET'
+					method: 'GET',
+					credentials: 'include'
 				})
 			      .then((res) => {
 						return res.json()
@@ -54,7 +54,7 @@ const MyPage = ({handleSelectedBird, selectedBird, setSelectedBird, userBirds, s
 	
 	return (
 		<>
-		<UserAndBirdInformation reRender={reRender} handleSelectedBird={handleSelectedBird} handleOpen={handleOpen} userBirds={userBirds} />
+		<UserAndBirdInformation reRender={reRender} handleSelectedBird={handleSelectedBird} handleOpen={handleOpen} userBirds={userBirds} setSelectedUser={setSelectedUser} />
 		
 		<Button onClick={handleOpen}>愛鳥さんを追加する</Button>
 		
@@ -62,7 +62,11 @@ const MyPage = ({handleSelectedBird, selectedBird, setSelectedBird, userBirds, s
 		      open={open}
 		      onClose={handleClose}
 		  >
-		  <BirdRegsterForm setReRender={setReRender} reRender={reRender} selectedBird={selectedBird} handleClose={handleClose}/>
+		  {selectedUser ? 
+			<UserEditForm userBirds={userBirds} handleClose={handleClose} handleReRender={handleReRender} />
+			:
+			<BirdRegsterForm selectedBird={selectedBird} handleClose={handleClose} handleReRender={handleReRender} />
+		  }
 		</Modal>
 		</>
 	)

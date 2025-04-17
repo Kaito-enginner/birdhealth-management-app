@@ -4,31 +4,19 @@ import { TextField, Stack, MenuItem, FormControl, InputLabel, Select, Button, Ty
 import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { BirdPreview, UserPreview } from '../../type/type';
+import { BirdPreview } from '../../type/type';
+import { modalStyle } from '../../theme/theme';
 
 interface BirdRegsterFormProps {
-	reRender: boolean;
-	setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 	selectedBird: BirdPreview | undefined;
 	handleClose: () => void;
+	handleReRender: () => void
 }
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4,
-};
 
 const currentDay = format(new Date(), 'yyyy-MM-dd');
 
-export default function BirdRegsterForm({setReRender, reRender, selectedBird, handleClose}: BirdRegsterFormProps) {
+export default function BirdRegsterForm({ selectedBird, handleClose, handleReRender }: BirdRegsterFormProps) {
 	const { id } = useParams(); // URLからidを取得
-	const handleReRender = () => setReRender(!reRender);
 	const { register, control, handleSubmit, formState: { errors }, setValue } = useForm<BirdPreview>({
 	  defaultValues: {
 		id: selectedBird && selectedBird.id,
@@ -39,23 +27,6 @@ export default function BirdRegsterForm({setReRender, reRender, selectedBird, ha
 	    bestWeight: 30
 	  }
   });
-
-  // 送信処理(ユーザー情報を編集)
-  const onEditUser: SubmitHandler<UserPreview> = (data: UserPreview) => {
-    fetch(`http://localhost:8080/mypage/${id}/edit/bird`, {
-    	method: 'POST',
-    	headers: {
-    		'Content-Type': 'application/json' // JSON形式のデータであることを宣言
-    	},
-    	body: JSON.stringify(data) // JSON形式に変換する
-    })
-    .then(() => {
-  		handleClose()
-    	handleReRender()
-  	
-    })
-    .catch(error => console.error("リクエストエラー:", error));
-  }
   
   // 送信処理(愛鳥情報を追加)
   const onCreateBird: SubmitHandler<BirdPreview> = (data: BirdPreview) => {
@@ -64,7 +35,8 @@ export default function BirdRegsterForm({setReRender, reRender, selectedBird, ha
 		headers: {
 			'Content-Type': 'application/json' // JSON形式のデータであることを宣言
 		},
-		body: JSON.stringify(data) // JSON形式に変換する
+		body: JSON.stringify(data), // JSON形式に変換する
+		credentials: 'include'
 	})
 	.then(() => {
 		handleClose()
@@ -80,7 +52,8 @@ export default function BirdRegsterForm({setReRender, reRender, selectedBird, ha
 	  	headers: {
 	  		'Content-Type': 'application/json' // JSON形式のデータであることを宣言
 	  	},
-	  	body: JSON.stringify(data) // JSON形式に変換する
+	  	body: JSON.stringify(data), // JSON形式に変換する
+		credentials: 'include'
 	  })
 	  .then(() => {
 		handleClose()
@@ -105,7 +78,7 @@ export default function BirdRegsterForm({setReRender, reRender, selectedBird, ha
 
   return (
 	<>
-		<Box component={"form"} onSubmit={handleSubmit(selectedBird ? onEditBird : onCreateBird)} sx={style}>
+		<Box component={"form"} onSubmit={handleSubmit(selectedBird ? onEditBird : onCreateBird)} sx={modalStyle}>
 			<Stack spacing={2}>
 				<Typography variant="h6" component="h2"sx={{p: .5}}>愛鳥さん登録フォーム</Typography>
 				{/* ID */}

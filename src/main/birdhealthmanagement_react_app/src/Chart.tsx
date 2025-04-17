@@ -22,7 +22,8 @@ const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selec
 	// ユーザー＋愛鳥情報を取得
 	useEffect(() => {
 			    fetch(`http://localhost:8080/mypage/${id}`, {
-					method: 'GET'
+					method: 'GET',
+					credentials: 'include'
 				})
 			      .then((res) => {
 						return res.json()

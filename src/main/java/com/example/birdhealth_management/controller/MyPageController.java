@@ -52,7 +52,7 @@ public class MyPageController {
 		birdService.update(bird);
 	}
 	
-	@PostMapping("/edit/user")
+	@PostMapping("/useredit")
 	public void editUser(@PathVariable Integer id, @RequestBody User user) {
 		userService.update(id, user);
 	}

@@ -11,7 +11,6 @@ import com.example.birdhealth_management.entity.Bird;
 import com.example.birdhealth_management.entity.HealthRecord;
 
 public interface HealthRecordRepository extends JpaRepository<HealthRecord, Integer> {
-//	public List<HealthRecord> findByBirdId(Bird bird);
-	@Query(value = "SELECT h FROM HealthRecord h WHERE h.birdId = :bird AND h.day BETWEEN :startDate AND :endDate")
+	@Query(value = "SELECT h FROM HealthRecord h WHERE h.birdId = :bird AND h.day BETWEEN :startDate AND :endDate ORDER BY h.day ASC")
 	List<HealthRecord> findUsersByCreatedAtBetween(@Param("bird") Bird bird, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

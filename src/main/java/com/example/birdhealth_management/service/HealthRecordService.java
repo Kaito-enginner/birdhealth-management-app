@@ -6,9 +6,11 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.birdhealth_management.entity.Bird;
 import com.example.birdhealth_management.entity.HealthRecord;
+import com.example.birdhealth_management.entity.HealthRecordFetch;
 import com.example.birdhealth_management.repository.BirdRepoitory;
 import com.example.birdhealth_management.repository.HealthRecordRepository;
 
@@ -34,5 +36,22 @@ public class HealthRecordService {
 		} catch (Exception e) {
 			return List.of();
 		}
+	}
+	
+	@Transactional
+	public void create(Integer id, String date, HealthRecordFetch healthRecordFetch) {
+		HealthRecord newHealthRecord = new HealthRecord();
+		Bird bird = birdRepoitory.getReferenceById(id);
+		LocalDate formattedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		
+		newHealthRecord.setBirdId(bird);
+		newHealthRecord.setDay(formattedDate);
+		newHealthRecord.setWeight(healthRecordFetch.getWeight());
+		newHealthRecord.setMealAmount(healthRecordFetch.getMealAmount());
+		newHealthRecord.setHumidity(healthRecordFetch.getHumidity());
+		newHealthRecord.setTemperature(healthRecordFetch.getTemperature());
+		newHealthRecord.setMemo(healthRecordFetch.getMemo());
+		
+		healthRecordRepository.save(newHealthRecord);
 	}
 }
