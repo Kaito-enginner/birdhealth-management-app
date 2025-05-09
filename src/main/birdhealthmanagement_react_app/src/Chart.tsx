@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { MonthlyRecord, UserBirdDto } from "./type/type";
 import { BirdChart } from "./components/BirdChart";
-import { useParams } from "react-router-dom";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Box } from "@mui/material";
 
@@ -17,11 +16,10 @@ interface ChartPrps {
 }
 
 const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selectedPeriod, setSelectedPeriod, birdHandleChange}: ChartPrps) => {
-	const { id } = useParams(); // URLからidを取得
 	
 	// ユーザー＋愛鳥情報を取得
 	useEffect(() => {
-			    fetch(`http://localhost:8080/mypage/${id}`, {
+			    fetch(`http://localhost:8080/mypage`, {
 					method: 'GET',
 					credentials: 'include'
 				})

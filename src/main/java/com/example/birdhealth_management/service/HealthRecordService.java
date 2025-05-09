@@ -10,24 +10,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.birdhealth_management.entity.Bird;
 import com.example.birdhealth_management.entity.HealthRecord;
-import com.example.birdhealth_management.entity.HealthRecordFetch;
-import com.example.birdhealth_management.repository.BirdRepoitory;
+import com.example.birdhealth_management.repository.BirdRepository;
 import com.example.birdhealth_management.repository.HealthRecordRepository;
 
 @Service
 public class HealthRecordService {
 	private final HealthRecordRepository healthRecordRepository;
-	private final BirdRepoitory birdRepoitory;
+	private final BirdRepository birdRepository;
 
 	
-	public HealthRecordService(HealthRecordRepository healthRecordRepository, BirdRepoitory birdRepoitory) {
+	public HealthRecordService(HealthRecordRepository healthRecordRepository, BirdRepository birdRepository) {
 		this.healthRecordRepository = healthRecordRepository;
-		this.birdRepoitory = birdRepoitory;
+		this.birdRepository = birdRepository;
 	}
 	
+	// 月間の健康記録を取得する
 	public List<HealthRecord> getMonthlyHealthRecord(Integer id, String date) {
 		try {
-			Bird bird = birdRepoitory.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+			Bird bird = birdRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
 	    LocalDate localDate = LocalDate.parse(date + "-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 			LocalDate startDate = localDate.with(TemporalAdjusters.firstDayOfMonth());
 			LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
@@ -39,18 +39,31 @@ public class HealthRecordService {
 	}
 	
 	@Transactional
-	public void create(Integer id, String date, HealthRecordFetch healthRecordFetch) {
+	public void create(Integer id, String date, HealthRecord healthRecord) {
 		HealthRecord newHealthRecord = new HealthRecord();
-		Bird bird = birdRepoitory.getReferenceById(id);
+		Bird bird = birdRepository.getReferenceById(id);
 		LocalDate formattedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		
 		newHealthRecord.setBirdId(bird);
 		newHealthRecord.setDay(formattedDate);
-		newHealthRecord.setWeight(healthRecordFetch.getWeight());
-		newHealthRecord.setMealAmount(healthRecordFetch.getMealAmount());
-		newHealthRecord.setHumidity(healthRecordFetch.getHumidity());
-		newHealthRecord.setTemperature(healthRecordFetch.getTemperature());
-		newHealthRecord.setMemo(healthRecordFetch.getMemo());
+		newHealthRecord.setWeight(healthRecord.getWeight());
+		newHealthRecord.setMealAmount(healthRecord.getMealAmount());
+		newHealthRecord.setHumidity(healthRecord.getHumidity());
+		newHealthRecord.setTemperature(healthRecord.getTemperature());
+		newHealthRecord.setMemo(healthRecord.getMemo());
+		
+		healthRecordRepository.save(newHealthRecord);
+	}
+	
+	@Transactional
+	public void update(HealthRecord healthRecord) {
+		HealthRecord newHealthRecord = healthRecordRepository.getReferenceById(healthRecord.getId());
+		
+		newHealthRecord.setWeight(healthRecord.getWeight());
+		newHealthRecord.setMealAmount(healthRecord.getMealAmount());
+		newHealthRecord.setHumidity(healthRecord.getHumidity());
+		newHealthRecord.setTemperature(healthRecord.getTemperature());
+		newHealthRecord.setMemo(healthRecord.getMemo());
 		
 		healthRecordRepository.save(newHealthRecord);
 	}

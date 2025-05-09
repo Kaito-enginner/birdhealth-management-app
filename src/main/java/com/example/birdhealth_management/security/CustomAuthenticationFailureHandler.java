@@ -18,6 +18,6 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-		response.getWriter().write("{\"error\": \"ログイン失敗: ユーザー名またはパスワードが間違っています。\"}");
+		response.getWriter().write("{\"error\": \"ユーザー名またはパスワードが間違っています。\"}");
 	}
 }

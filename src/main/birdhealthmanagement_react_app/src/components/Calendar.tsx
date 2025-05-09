@@ -2,16 +2,16 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // 月間カレンダー
 import interactionPlugin from "@fullcalendar/interaction"; // ユーザー操作対応
 import jaLocale from "@fullcalendar/core/locales/ja"; // 日本語対応
-import { Box, Modal, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, Typography, Stack } from "@mui/material";
+import { Box, Modal, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CalendarEvent, MonthlyRecord, UserBirdDto } from "../type/type";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { modalStyle } from "../theme/theme";
 import HealthRecordForm from "./form/HealthRecordForm";
-import { EventClickArg } from "@fullcalendar/core";
 import { DateClickArg } from "@fullcalendar/interaction";
 import { EventContentArg } from "@fullcalendar/core";
 import { DatesSetArg } from "@fullcalendar/core";
+import { EventClickArg } from "@fullcalendar/core";
 
 
 interface CalendarProps {
@@ -47,10 +47,10 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 		const formatDate = format(startDate, "yyyy-MM");
 		setSelectedPeriod(formatDate)
 	};
-	
-	const calendarEvents = monthlyRecords && monthlyRecords.map((record, index) => {
+
+	const calendarEvents = monthlyRecords && monthlyRecords.map((record) => {
 		return {
-			id: index,
+			id: record.id,
 			date: record.day,
 			weight: record.weight,
 			mealAmount: record.mealAmount,
@@ -59,15 +59,24 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 			memo: record.memo
 		}
 	})
-	
+
 	useEffect(() => {
-		
+
 	})
 
 	// イベントをクリックしたときの処理
 	const onClickEvent = (eventDetail: EventClickArg) => {
-		const event = eventDetail.event.extendedProps
-		setSelectEvent(event)
+		const extended = eventDetail.event.extendedProps
+		const eventId = parseInt(eventDetail.event.id)
+		const fullEvent: CalendarEvent = {
+			id: eventId,
+			weight: extended.weigt,
+			mealAmount: extended.mealAmount,
+			temperature: extended.temperature,
+			humidity: extended.humidity,
+			memo: extended.memo,
+		};
+		setSelectEvent(fullEvent)
 		handleCalendarModalOpen()
 	}
 
@@ -103,7 +112,7 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 						<Select
 							labelId="bird-select-label"
 							id="bird-simple-select"
-							value={birdId ?? ''}
+							value={birdId ? birdId.toString() : ''}
 							label="bird"
 							onChange={birdHandleChange}
 						>
@@ -129,23 +138,13 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 				onClose={handleCalendarModalClose}
 			>
 				<Box sx={modalStyle}>
-					{selectEvent ?
-						<Stack spacing={2}>
-							<Typography variant="h5">健康記録</Typography>
-							<Typography>体重：{selectEvent.weight}</Typography>
-							<Typography>ごはん：{selectEvent.mealAmount}</Typography>
-							<Typography>温度：{selectEvent.temperature}</Typography>
-							<Typography>湿度：{selectEvent.humidity}</Typography>
-							<Typography>メモ：{selectEvent.memo}</Typography>
-						</Stack>
-						:
-						<HealthRecordForm 
-						birdId={birdId} 
-						handleCalendarModalClose={handleCalendarModalClose} 
+					<HealthRecordForm
+						birdId={birdId}
+						handleCalendarModalClose={handleCalendarModalClose}
 						clickDate={clickDate}
 						handleReRender={handleReRender}
-						/>
-					}
+						selectEvent={selectEvent}
+					/>
 				</Box>
 			</Modal>
 		</Box>

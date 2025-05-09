@@ -19,11 +19,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
 		// ログインしたユーザー情報を取得
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		Integer userId = userDetails.getUser().getId();
-
+		String roleName = userDetails.getUser().getRole().getName();
+		
 		response.setContentType("application/json");
     response.setCharacterEncoding("UTF-8");
-    response.getWriter().write("{\"userId\": " + userId + "}");
+    String jsonResponse = String.format("{\"role\": \"%s\"}", roleName);
+    response.getWriter().write(jsonResponse);
     response.setStatus(HttpServletResponse.SC_OK);
 	}
 

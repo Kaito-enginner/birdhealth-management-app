@@ -10,6 +10,9 @@ import { Outlet } from 'react-router-dom';
 import SideBar from '../common/SideBar';
 const drawerWidth = 240;
 
+//interface AppLayoutProps {
+//	userRole: "GENERAL" | "ADMIN" | null;
+//}
 
 export default function AppLayout() {
   const [mobileOpen, setMobileOpen] = React.useState(false);

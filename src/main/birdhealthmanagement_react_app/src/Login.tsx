@@ -5,7 +5,6 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { response } from "express";
 
 
 type LoginInformation = {
@@ -41,7 +40,7 @@ const Login = ({ message, setMessage }: LoginProps) => {
 	const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 	};
-	const onLoginSubmit: SubmitHandler<LoginInformation> = (data: LoginInformation) => {
+	const loginInformationSubmit: SubmitHandler<LoginInformation> = (data: LoginInformation) => {
 		const formData = new URLSearchParams();
 		formData.append('username', data.email);
 		formData.append('password', data.password);
@@ -54,7 +53,7 @@ const Login = ({ message, setMessage }: LoginProps) => {
 			body: formData.toString(),
 			credentials: 'include' // ← セッションのCookie送受信に必要
 		})
-			.then(async(response) => {
+			.then(async (response) => {
 				if (!response.ok) {
 					const errorData = await response.json();
 					throw new Error(errorData.error || "ログインに失敗しました");
@@ -62,8 +61,13 @@ const Login = ({ message, setMessage }: LoginProps) => {
 				return response.json();
 			})
 			.then(data => {
-				const userId = data.userId
-				navigate(`/${userId}/home`, { state: { loginSuccess: true } });
+				const role = data.role
+				//				setUserRole(role)
+				if (role === 'ROLE_ADMIN') {
+					navigate(`/${role}/home`, { state: { loginSuccess: true } });
+				} else {
+					navigate(`/home`, { state: { loginSuccess: true } });
+				}
 			})
 			.catch(error => {
 				console.error("ログインエラー:", error)
@@ -72,9 +76,13 @@ const Login = ({ message, setMessage }: LoginProps) => {
 	}
 
 	useEffect(() => {
-		if (location.state?.loginSuccess) {
+		if (location.state?.signupSuccess) {
 			setMessage("会員登録が完了しました。");
-			const timer = setTimeout(() => setMessage(""), 3000); // 3秒後に消える
+			const timer = setTimeout(() => setMessage(""), 2000);
+			return () => clearTimeout(timer);
+		} else if (location.state?.changedSuccess) {
+			setMessage("仮パスワードを送信しました。");
+			const timer = setTimeout(() => setMessage(""), 2000);
 			return () => clearTimeout(timer);
 		}
 	}, [location.state]);
@@ -93,11 +101,11 @@ const Login = ({ message, setMessage }: LoginProps) => {
 			</Box>
 			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
 				<Paper sx={{ p: '2rem' }}>
-					{message && <p>{message}</p>}
-					<form onSubmit={handleSubmit(onLoginSubmit)}>
-						<Stack spacing={3}>
+					{message && <Typography variant="h6" sx={{ fontweight: 'bold', color: 'deepskyblue' }}>{message}</Typography>}
+					<form onSubmit={handleSubmit(loginInformationSubmit)}>
+						<Stack spacing={3} sx={{ textAlign: 'center' }}>
 							{loginError && <p style={{ color: 'red' }}>{loginError}</p>}
-							<Typography variant="h5" sx={{ textAlign: 'center' }}>ログイン</Typography>
+							<Typography variant="h5">ログイン</Typography>
 							{/* メールアドレス */}
 							<Controller
 								{...register('email', {
@@ -170,6 +178,11 @@ const Login = ({ message, setMessage }: LoginProps) => {
 
 					<Link to="/signup" style={{ textDecoration: 'none', display: 'block', textAlign: 'center', marginTop: '1rem' }}>
 						会員登録
+						<OpenInNewIcon />
+					</Link>
+
+					<Link to="/reset" style={{ textDecoration: 'none', display: 'block', textAlign: 'center' }}>
+						パスワードをお忘れですか？
 						<OpenInNewIcon />
 					</Link>
 				</Paper>

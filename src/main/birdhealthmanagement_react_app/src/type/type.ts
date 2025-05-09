@@ -1,9 +1,7 @@
-// Bird 型
 export interface Bird {
 	id: number;
 	userId: number
 	name: string;
-	age: number;
 	gender: string;
 	birthday: string;
 	bestWeight: number;
@@ -12,24 +10,23 @@ export interface Bird {
 };
 
 export interface UserBirdDto {
-	userId: number;
 	userName: string;
-	userAge: number;
 	userEmail: string;
 	birds: Bird[];
 };
 
-// Birdの送信処理用の型
-export type BirdPreview = Pick<Bird, 'id' | 'name' | 'gender' | 'age' | 'birthday' | 'bestWeight'>;
+export type BirdFormType = Pick<Bird, 'id' | 'name' | 'gender' | 'birthday' | 'bestWeight'>;
 
-// Userの送信処理用の型
 export interface UserFormType {
 	name: string;
-	age: number;
 	email: string;
 	password: string;
 	confirmationpassword: string;
 }
+
+export type UserEditFormType = Pick<UserFormType, 'name' | 'email'>;
+
+export type PasswordEditFormType = Pick<UserFormType, 'password' | 'confirmationpassword'>;
 
 export type MonthlyRecord = {
 	id: number;
@@ -38,36 +35,60 @@ export type MonthlyRecord = {
 	weight: number;
 	mealAmount: number;
 	temperature: number;
-	humidity: string;
+	humidity: number;
 	memo: string;
 	createdAt: string;
 	updatedAt: string;
 };
 
-export type CalendarAllEvents = {
-	number: number;
-	date: string;
-	weight: number;
-	mealAmount: number;
-	temperature: number;
-	humidity: string;
-	memo: string;
-};
-
-// カレンダー表示用の型
 export type CalendarEvent = {
+	id: number;
 	weight: number;
 	mealAmount: number;
 	temperature: number;
-	humidity: string;
+	humidity: number;
 	memo: string;
 };
 
-// 健康記録送信用の型
-export type HealthRecordSend = {
+export type HealthRecordFormType = {
+	id?: number;
 	weight: number;
 	mealAmount: number;
 	temperature: number;
 	humidity: number;
 	memo: string;
 }
+
+interface Contact {
+	id: number;
+	email: string;
+	content: string;
+	status: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface ContactFormType {
+	email: string;
+	content: string;
+}
+
+export interface UserContactDto {
+	userId: number;
+	userName: string;
+	userEmail: string;
+	contact: Contact;
+};
+
+
+export interface ContactTableType {
+	id: number;
+	name: string;
+	email: string;
+	content: string;
+	status: boolean;
+	createdAt: string;
+}
+
+
+

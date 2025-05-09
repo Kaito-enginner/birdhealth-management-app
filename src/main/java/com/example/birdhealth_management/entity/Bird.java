@@ -26,10 +26,7 @@ public class Bird {
   private User userId;   
   
   @Column(name = "name")
-  private String name;   
-  
-  @Column(name = "age")
-  private Integer age;
+  private String name;
       
   @Column(name = "gender")
   private String gender;    

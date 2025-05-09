@@ -2,59 +2,67 @@ package com.example.birdhealth_management.controller;
 
 import java.util.List;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.birdhealth_management.dto.BirdDto;
+import com.example.birdhealth_management.dto.UserBirdDto;
 import com.example.birdhealth_management.entity.Bird;
 import com.example.birdhealth_management.entity.User;
-import com.example.birdhealth_management.entity.UserBirdDto;
-import com.example.birdhealth_management.repository.BirdRepoitory;
-import com.example.birdhealth_management.repository.UserRepository;
+import com.example.birdhealth_management.repository.BirdRepository;
+import com.example.birdhealth_management.security.UserDetailsImpl;
 import com.example.birdhealth_management.service.BirdService;
 import com.example.birdhealth_management.service.UserService;
 
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
-@RequestMapping("/mypage/{id}")
+@RequestMapping("/mypage")
 public class MyPageController {
-	private final UserRepository userRepository;
-	private final BirdRepoitory birdRepoitory;
+	private final BirdRepository birdRepository;
 	private final BirdService birdService;
 	private final UserService userService;
 
-	public MyPageController(UserRepository userRepository, BirdRepoitory birdRepoitory, BirdService birdService, UserService userService) {
-		this.userRepository = userRepository;
-		this.birdRepoitory = birdRepoitory;
+	public MyPageController(BirdRepository birdRepository, BirdService birdService, UserService userService) {
+		this.birdRepository = birdRepository;
 		this.birdService = birdService;
 		this.userService = userService;
 	}
 
 	@GetMapping
-  public UserBirdDto getMyPageData(@PathVariable Integer id) {
-		User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-		List<Bird> birds = birdRepoitory.findByUserId(user);
-		return new UserBirdDto(birds, user.getId(), user.getName(), user.getAge(),user.getEmail());
+  public UserBirdDto getMyPageData(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		User loginUser = userDetails.getUser();
+		List<Bird> birds = birdRepository.findByUserId(loginUser);
+		List<BirdDto> birdDtos = birdService.convertToDto(birds);
+		return new UserBirdDto(birdDtos, loginUser.getName(), loginUser.getEmail());
   }
 	
-	@PostMapping("/register")
-	public void regiterBird(@PathVariable Integer id, @RequestBody Bird bird) {
-		birdService.create(id, bird);
+	@PostMapping("/birdregister")
+	public void regiterBird(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Bird bird) {
+		User loginUser = userDetails.getUser();
+		birdService.create(loginUser, bird);
 	}
 	
-	@PostMapping("/edit/bird")
+	@PostMapping("/birdedit")
 	public void editBird(@RequestBody Bird bird) {
 		birdService.update(bird);
 	}
 	
 	@PostMapping("/useredit")
-	public void editUser(@PathVariable Integer id, @RequestBody User user) {
-		userService.update(id, user);
+	public void editUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User user) {
+		User loginUser = userDetails.getUser();
+		userService.update(loginUser, user);
+	}
+	
+	@PostMapping("/useredit/pass")
+	public void editUserPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User user) {
+		User loginUser = userDetails.getUser();
+		userService.passwordUpdate(loginUser, user);
 	}
 
 }

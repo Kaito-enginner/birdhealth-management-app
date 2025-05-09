@@ -1,49 +1,67 @@
 package com.example.birdhealth_management.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.birdhealth_management.dto.BirdDto;
 import com.example.birdhealth_management.entity.Bird;
 import com.example.birdhealth_management.entity.User;
-import com.example.birdhealth_management.repository.BirdRepoitory;
-import com.example.birdhealth_management.repository.UserRepository;
+import com.example.birdhealth_management.repository.BirdRepository;
 
 @Service
 public class BirdService {
-	private final UserRepository userRepository;
-	private final BirdRepoitory birdRepoitory;
-	
-	public BirdService (UserRepository userRepository, BirdRepoitory birdRepoitory) {
-		this.userRepository = userRepository;
-		this.birdRepoitory = birdRepoitory;
+	private final BirdRepository birdRepository;
+
+	public BirdService(BirdRepository birdRepository) {
+		this.birdRepository = birdRepository;
 	}
-	
+
 	@Transactional
-	public void create(Integer id, Bird birdData) {
+	public void create(User user, Bird birdData) {
 		Bird newBird = new Bird();
-		User user = userRepository.getReferenceById(id);
 		
 		newBird.setUserId(user);
 		newBird.setName(birdData.getName());
-		newBird.setAge(birdData.getAge());
 		newBird.setGender(birdData.getGender());
 		newBird.setBirthday(birdData.getBirthday());
 		newBird.setBestWeight(birdData.getBestWeight());
-		
-		birdRepoitory.save(newBird);
+
+		birdRepository.save(newBird);
 	}
 
 	@Transactional
 	public void update(Bird birdData) {
-		Bird updateBird = birdRepoitory.getReferenceById(birdData.getId());
-		
+		Bird updateBird = birdRepository.getReferenceById(birdData.getId());
+
 		updateBird.setName(birdData.getName());
-		updateBird.setAge(birdData.getAge());
 		updateBird.setGender(birdData.getGender());
 		updateBird.setBirthday(birdData.getBirthday());
 		updateBird.setBestWeight(birdData.getBestWeight());
-		
-		birdRepoitory.save(updateBird);
+
+		birdRepository.save(updateBird);
+	}
+
+	//Bird型→BirdDtoに変換
+	public List<BirdDto> convertToDto(List<Bird> birds) {
+		List<BirdDto> birdDtos = new ArrayList<BirdDto>();
+		for (int i = 0; i < birds.size(); i++) {
+			Bird bird = birds.get(i);
+			BirdDto birdDto = new BirdDto();
+			
+			birdDto.setId(bird.getId());
+			birdDto.setName(bird.getName());
+			birdDto.setGender(bird.getGender());
+			birdDto.setBirthday(bird.getBirthday());
+			birdDto.setBestWeight(bird.getBestWeight());
+			birdDto.setCreatedAt(bird.getCreatedAt());
+			birdDto.setUpdatedAt(bird.getUpdatedAt());
+			
+			birdDtos.add(birdDto);
+		}
+
+		return birdDtos;
 	}
 }
-

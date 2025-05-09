@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Box, Paper, Button, Stack, TextField, Typography, FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, FormHelperText } from "@mui/material";
-import React from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -13,7 +13,6 @@ const SignUp = () => {
 	const { register, control, handleSubmit, watch, setError, formState: { errors } } = useForm<UserFormType>({
 		defaultValues: {
 			name: "",
-			age: undefined,
 			email: "",
 			password: "",
 			confirmationpassword: ""
@@ -22,9 +21,11 @@ const SignUp = () => {
 
 	const password = watch('password'); // 入力されたパスワードを監視
 
-	const [showPassword, setShowPassword] = React.useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmationPassword, setShowConfirmationPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
+	const handleClickShowConfirmationPassword = () => setShowConfirmationPassword((show) => !show);
 
 	const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
@@ -33,7 +34,7 @@ const SignUp = () => {
 	const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
 	};
-	const onSignUpSubmit: SubmitHandler<UserFormType> = (data: UserFormType) => {
+	const createUser: SubmitHandler<UserFormType> = (data: UserFormType) => {
 		fetch('http://localhost:8080/signup', {
 			method: 'POST',
 			headers: {
@@ -72,9 +73,9 @@ const SignUp = () => {
 			</Box>
 			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', pt: '3rem' }}>
 				<Paper sx={{ p: '2rem' }}>
-					<form onSubmit={handleSubmit(onSignUpSubmit)}>
-						<Stack spacing={2}>
-							<Typography variant="h5" sx={{ textAlign: 'center' }}>会員登録</Typography>
+					<form onSubmit={handleSubmit(createUser)}>
+						<Stack spacing={2} sx={{ textAlign: 'center'}}>
+							<Typography variant="h5">会員登録</Typography>
 
 							{/* 名前 */}
 							<Controller
@@ -86,20 +87,6 @@ const SignUp = () => {
 								render={({ field }) => {
 									return (
 										<TextField {...field} label="名前" type='text' error={!!errors.name} helperText={errors.name?.message as string} />
-									)
-								}}
-							/>
-
-							{/* 年齢 */}
-							<Controller
-								{...register('age', {
-									required: '年齢を入力してください。'
-								})}
-								name='age'
-								control={control}
-								render={({ field }) => {
-									return (
-										<TextField {...field} label="年齢" type='number' error={!!errors.age} helperText={errors.age?.message as string} />
 									)
 								}}
 							/>
@@ -167,7 +154,7 @@ const SignUp = () => {
 								}}
 							/>
 
-							{/* パスワード */}
+							{/* パスワード(確認用) */}
 							<Controller
 								{...register('confirmationpassword', {
 									required: 'パスワード(確認用)を入力してください。',
@@ -192,19 +179,19 @@ const SignUp = () => {
 											<OutlinedInput
 												{...field}
 												id="outlined-adornment-confirmationpassword"
-												type={showPassword ? 'text' : 'password'}
+												type={showConfirmationPassword ? 'text' : 'password'}
 												endAdornment={
 													<InputAdornment position="end">
 														<IconButton
 															aria-label={
-																showPassword ? 'hide the password' : 'display the password'
+																showConfirmationPassword ? 'hide the password' : 'display the password'
 															}
-															onClick={handleClickShowPassword}
+															onClick={handleClickShowConfirmationPassword}
 															onMouseDown={handleMouseDownPassword}
 															onMouseUp={handleMouseUpPassword}
 															edge="end"
 														>
-															{showPassword ? <VisibilityOff /> : <Visibility />}
+															{showConfirmationPassword ? <VisibilityOff /> : <Visibility />}
 														</IconButton>
 													</InputAdornment>
 												}

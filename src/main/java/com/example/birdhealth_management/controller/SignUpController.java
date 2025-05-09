@@ -20,7 +20,7 @@ public class SignUpController {
 	}
 	
 	@PostMapping
-	public void registerUser(@RequestBody User userData) {
+	public void registerNewUser(@RequestBody User userData) {
 		userService.create(userData);
 	}
 }

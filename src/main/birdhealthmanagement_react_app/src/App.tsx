@@ -9,20 +9,25 @@ import AppLayout from './components/layout/AppLayout';
 import { theme } from './theme/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline';
-import { BirdPreview, MonthlyRecord, UserBirdDto } from './type/type'
+import { BirdFormType, MonthlyRecord, UserBirdDto } from './type/type'
 import NoMatch from './NoMatch';
 import { SelectChangeEvent } from '@mui/material/Select';
+import AdminHome from './AdminHome';
+import Management from './Management';
+import Contact from './Contact';
+import PasswordReset from './PasswordReset';
 
 const App = () => {
-	const [selectedBird, setSelectedBird] = useState<BirdPreview>()
-	const handleSelectedBird = (bird: BirdPreview): void => setSelectedBird(bird)
+	const [selectedBird, setSelectedBird] = useState<BirdFormType>()
+	const handleSelectedBird = (bird: BirdFormType): void => setSelectedBird(bird)
 	const [userBirds, setUserBirds] = useState<UserBirdDto>();
 	const [reRender, setReRender] = useState(false);
 	const [monthlyRecords, setMonthlyRecords] = useState<MonthlyRecord[]>();
 	const [birdId, setBirdId] = useState<number>();
 	const [selectedPeriod, setSelectedPeriod] = useState('');
 	const [message, setMessage] = useState("");
-
+	const [openDialog, setOpenDialog] = useState(false);
+	const [dialogMessage, setDialogMessage] = useState('');
 
 	const birdHandleChange = (e: SelectChangeEvent) => {
 		setBirdId(parseInt(e.target.value));
@@ -55,8 +60,8 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
-					<Route 
-						path='/' 
+					<Route
+						path='/'
 						element={
 							<Login
 								message={message}
@@ -64,8 +69,14 @@ const App = () => {
 							/>
 						}
 					/>
-					<Route path='/signup' element={<SignUp />}/>
-					<Route path='/:id' element={<AppLayout />}>
+					<Route path='/signup' element={<SignUp />} />
+					<Route path='/reset' element={<PasswordReset />} />
+					<Route
+						path='/'
+						element={
+							<AppLayout />
+						}
+					>
 						<Route
 							path='home'
 							element={
@@ -114,7 +125,37 @@ const App = () => {
 								/>
 							}
 						/>
+
+						<Route
+							path='contact'
+							element={
+								<Contact
+									openDialog={openDialog}
+									setOpenDialog={setOpenDialog}
+									dialogMessage={dialogMessage}
+									setDialogMessage={setDialogMessage}
+								/>
+							}
+						/>
+
 						<Route path='*' element={<NoMatch />} />
+					</Route>
+
+					<Route path='/:role' element={<AppLayout />}>
+						<Route path='Home' element={<AdminHome />} />
+						<Route
+							path='management'
+							element={
+								<Management
+									openDialog={openDialog}
+									setOpenDialog={setOpenDialog}
+									dialogMessage={dialogMessage}
+									setDialogMessage={setDialogMessage}
+									reRender={reRender}
+									handleReRender={handleReRender}
+								/>
+							}
+						/>
 					</Route>
 				</Routes>
 			</Router>

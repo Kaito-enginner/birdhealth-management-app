@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import Calendar from "./components/Calendar";
 import { MonthlyRecord, UserBirdDto } from "./type/type";
-import { Box, SelectChangeEvent } from "@mui/material";
-import { useParams, useLocation } from "react-router-dom";
+import { Box, SelectChangeEvent, Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 
 interface HomeProps {
 	monthlyRecords: MonthlyRecord[] | undefined;
@@ -18,12 +18,11 @@ interface HomeProps {
 }
 
 const Home = ({ monthlyRecords, userBirds, setUserBirds, birdId, birdHandleChange, reRender, setSelectedPeriod, handleReRender, message, setMessage }: HomeProps) => {
-	const { id } = useParams(); // URLからidを取得
 	const location = useLocation();
 
 	// ユーザー＋愛鳥さんの情報を取得
 	useEffect(() => {
-		fetch(`http://localhost:8080/mypage/${id}`, {
+		fetch(`http://localhost:8080/mypage`, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -35,18 +34,19 @@ const Home = ({ monthlyRecords, userBirds, setUserBirds, birdId, birdHandleChang
 			})
 			.catch(error => console.error("リクエストエラー:", error));
 	}, [reRender]);
-
+	
+	
 	useEffect(() => {
 		if (location.state?.loginSuccess) {
 			setMessage("ログインに成功しました！");
-			const timer = setTimeout(() => setMessage(""), 3000); // 3秒後に消える
+			const timer = setTimeout(() => setMessage(""), 1500);
 			return () => clearTimeout(timer);
 		}
 	}, [location.state]);
 
 	return (
 		<Box>
-			{message && <p>{message}</p>}
+			{message && <Typography variant="h6" sx={{fontweight: 'bold', color: 'deepskyblue'}}>{message}</Typography>}
 			<Calendar
 				monthlyRecords={monthlyRecords}
 				birdId={birdId}

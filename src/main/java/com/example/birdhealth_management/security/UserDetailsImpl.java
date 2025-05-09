@@ -1,7 +1,6 @@
 package com.example.birdhealth_management.security;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,9 +9,11 @@ import com.example.birdhealth_management.entity.User;
 
 public class UserDetailsImpl implements UserDetails {
 	private final User user;
+  private final Collection<GrantedAuthority> authorities;
 
-	public UserDetailsImpl(User user) {
+	public UserDetailsImpl(User user, Collection<GrantedAuthority> authorities) {
 		this.user = user;
+		this.authorities = authorities;
 	}
 
 	public User getUser() {
@@ -32,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Collections.emptyList(); // ロールがない場合でもこう返す
+		return authorities; 
 	}
 
 	// アカウントが期限切れでなければtrueを返す

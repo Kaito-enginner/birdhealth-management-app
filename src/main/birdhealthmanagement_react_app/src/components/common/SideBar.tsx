@@ -9,15 +9,17 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Divider from '@mui/material/Divider';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Logout } from "../Logout";
 
 interface SideBarProps {
-	drawerWidth: number,
-	mobileOpen: boolean,
-	handleDrawerTransitionEnd: () => void,
-	handleDrawerClose: () => void
+	drawerWidth: number;
+	mobileOpen: boolean;
+	handleDrawerTransitionEnd: () => void;
+	handleDrawerClose: () => void;
 }
 
 interface menuItem {
@@ -27,7 +29,7 @@ interface menuItem {
 }
 
 const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose }: SideBarProps) => {
-	const { id } = useParams(); // URLからidを取得
+	const { role } = useParams(); // URLからroleを取得
 	const navigate = useNavigate();
 
 	// ログアウト処理
@@ -41,10 +43,16 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 		}
 	};
 
-	const MemberMenuItems: menuItem[] = [
-		{ text: "ホーム", path: `/${id}/home`, icon: HomeIcon },
-		{ text: "マイページ", path: `/${id}/mypage`, icon: PersonIcon },
-		{ text: "グラフ", path: `/${id}/chart`, icon: BarChartIcon },
+	const AdminMenuItems: menuItem[] = [
+		{ text: "ホーム", path: `/${role}/home`, icon: HomeIcon },
+		{ text: "管理ページ", path: `/${role}/management`, icon: SupervisorAccountIcon }
+	]
+
+	const GeneralMenuItems: menuItem[] = [
+		{ text: "ホーム", path: `/home`, icon: HomeIcon },
+		{ text: "マイページ", path: `/mypage`, icon: PersonIcon },
+		{ text: "グラフ", path: `/chart`, icon: BarChartIcon },
+		{ text: "お問い合わせ", path: `/contact`, icon: ContactMailIcon }
 	]
 
 	const baseLinkStyle: CSSProperties = {
@@ -60,26 +68,50 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 		<div>
 			<Toolbar />
 			<Divider />
-			<List>
-				{MemberMenuItems.map((item, index) => (
-					<NavLink key={item.text} to={item.path} style={({ isActive }) => {
-						return {
-							...baseLinkStyle,
-							...(isActive ? activeLinkStyle : {})
-						}
-					}}>
-						<ListItem key={index} disablePadding>
-							<ListItemButton>
-								<ListItemIcon>
-									{/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-									<item.icon />
-								</ListItemIcon>
-								<ListItemText primary={item.text} />
-							</ListItemButton>
-						</ListItem>
-					</NavLink>
-				))}
-			</List>
+			{role === 'ROLE_ADMIN' ?
+				<List>
+					{AdminMenuItems.map((item, index) => (
+						<NavLink key={item.text} to={item.path} style={({ isActive }) => {
+							return {
+								...baseLinkStyle,
+								...(isActive ? activeLinkStyle : {})
+							}
+						}}>
+							<ListItem key={index} disablePadding>
+								<ListItemButton>
+									<ListItemIcon>
+										{/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+										<item.icon />
+									</ListItemIcon>
+									<ListItemText primary={item.text} />
+								</ListItemButton>
+							</ListItem>
+						</NavLink>
+					))}
+				</List>
+				:
+				<List>
+					{GeneralMenuItems.map((item, index) => (
+						<NavLink key={item.text} to={item.path} style={({ isActive }) => {
+							return {
+								...baseLinkStyle,
+								...(isActive ? activeLinkStyle : {})
+							}
+						}}>
+							<ListItem key={index} disablePadding>
+								<ListItemButton>
+									<ListItemIcon>
+										{/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+										<item.icon />
+									</ListItemIcon>
+									<ListItemText primary={item.text} />
+								</ListItemButton>
+							</ListItem>
+						</NavLink>
+					))}
+				</List>
+			}
+
 			<Divider />
 			<List>
 				<ListItem key={"ログアウト"} onClick={handleLogout} disablePadding>

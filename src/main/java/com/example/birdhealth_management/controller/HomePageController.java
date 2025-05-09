@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.birdhealth_management.entity.HealthRecordFetch;
+import com.example.birdhealth_management.entity.HealthRecord;
 import com.example.birdhealth_management.service.HealthRecordService;
 
 @RestController
@@ -19,12 +19,14 @@ public class HomePageController {
 	public HomePageController(HealthRecordService healthRecordService) {
 		this.healthRecordService = healthRecordService;
 	}
-
 	
 	@PostMapping("/{date}/register")
-  public void getChartPageData(@PathVariable Integer id, @PathVariable String date, @RequestBody HealthRecordFetch healthRecordFetch) {
-		healthRecordService.create(id, date, healthRecordFetch);
-		
+  public void registerHealthRecord(@PathVariable Integer id, @PathVariable String date, @RequestBody HealthRecord healthRecord) {
+		healthRecordService.create(id, date, healthRecord);
   }
-
+	
+	@PostMapping("/edit")
+  public void editHealthRecord(@RequestBody HealthRecord healthRecord) {
+		healthRecordService.update(healthRecord);
+  }
 }

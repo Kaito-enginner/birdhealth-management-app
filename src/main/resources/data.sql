@@ -1,10 +1,17 @@
+-- rolesテーブル
+INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_GENERAL');
+INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_ADMIN');
+
+
 -- usersテーブル
-INSERT IGNORE INTO users (id, name, age, email, password) VALUES (1, '山田太郎', 24, 'taro.yamada@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO');
-INSERT IGNORE INTO users (id, name, age, email, password) VALUES (2, '田中太郎', 45, 'taro.tanaka@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO');
+INSERT IGNORE INTO users (id, name, email, password, consecutive_login_days, role_id) VALUES (1, '山田太郎', 'taro.yamada@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 15, 1);
+INSERT IGNORE INTO users (id, name, email, password, consecutive_login_days, role_id) VALUES (2, '田中太郎', 'taro.tanaka@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 10, 2);
+
 
 -- birdsテーブル
-INSERT IGNORE INTO birds (id, user_id, name, age, gender, birthday, best_weight) VALUES (1, 1, 'つくし', 5, 'おんなのこ', '2025-04-07', 43);
-INSERT IGNORE INTO birds (id, user_id, name, age, gender, birthday, best_weight) VALUES (2, 1, 'ちとせ', 3, 'おとこのこ', '2025-04-07', 32);
+INSERT IGNORE INTO birds (id, user_id, name, gender, birthday, best_weight) VALUES (1, 1, 'つくし', 'おんなのこ', '2021-04-07', 43);
+INSERT IGNORE INTO birds (id, user_id, name, gender, birthday, best_weight) VALUES (2, 1, 'ちとせ', 'おとこのこ', '2018-04-25', 32);
+
 
 -- health_recordsテーブル
 INSERT IGNORE INTO health_records (id, bird_id, day, weight, meal_amount, temperature, humidity, memo) VALUES (1, 1, '2025-02-01', 45, 7, 25, 70, '雨のため湿度が高め');
@@ -66,4 +73,31 @@ INSERT IGNORE INTO health_records (id, bird_id, day, weight, meal_amount, temper
 INSERT IGNORE INTO health_records (id, bird_id, day, weight, meal_amount, temperature, humidity, memo) VALUES (57, 1, '2025-03-29', 42, 7, 27, 70, '雨のため湿度が高め');
 INSERT IGNORE INTO health_records (id, bird_id, day, weight, meal_amount, temperature, humidity, memo) VALUES (58, 1, '2025-03-30', 43, 7, 25, 80, '雨のため湿度がかなり高め、除湿器を使用');
 INSERT IGNORE INTO health_records (id, bird_id, day, weight, meal_amount, temperature, humidity, memo) VALUES (59, 1, '2025-03-31', 43, 7, 25, 80, '雨のため湿度がかなり高め、除湿器を使用');
+
+
+-- contactsテーブル
+INSERT IGNORE INTO contacts (id, user_id, email, content, status) VALUES (1, 1, 'taro.yamada@example.com', 'パスワードを変更してほしい。', true);
+INSERT IGNORE INTO contacts (id, user_id, email, content, status) VALUES (2, 1, 'taro.yamada@example.com', 'パスワードを変更してほしい。', true);
+INSERT IGNORE INTO contacts (id, user_id, email, content, status) VALUES (3, 1, 'taro.yamada@example.com', 'パスワードを変更してほしい。', false);
+INSERT IGNORE INTO contacts (id, user_id, email, content, status) VALUES (4, 1, 'taro.yamada@example.com', 'パスワードを変更してほしい。', false);
+INSERT IGNORE INTO contacts (id, user_id, email, content, status) VALUES (5, 1, 'taro.yamada@example.com', 'パスワードを変更してほしい。', false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
