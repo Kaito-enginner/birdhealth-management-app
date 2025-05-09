@@ -10,7 +10,7 @@ import com.example.birdhealth_management.entity.User;
 import com.example.birdhealth_management.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
 @RequestMapping("/signup")
 public class SignUpController {
 	private final UserService userService;
