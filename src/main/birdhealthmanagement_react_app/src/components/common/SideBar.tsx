@@ -14,6 +14,7 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import Divider from '@mui/material/Divider';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Logout } from "../Logout";
+import { useAuth } from '../security/AuthProvider';
 
 interface SideBarProps {
 	drawerWidth: number;
@@ -29,6 +30,7 @@ interface menuItem {
 }
 
 const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose }: SideBarProps) => {
+	const { setRole } = useAuth();
 	const { role } = useParams(); // URLからroleを取得
 	const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 			console.error(error);
 			alert("ログアウトに失敗しました");
 		}
+		setRole(null);
 	};
 
 	const AdminMenuItems: menuItem[] = [
@@ -68,7 +71,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 		<div>
 			<Toolbar />
 			<Divider />
-			{role === 'ROLE_ADMIN' ?
+			{role === 'admin' ?
 				<List>
 					{AdminMenuItems.map((item, index) => (
 						<NavLink key={item.text} to={item.path} style={({ isActive }) => {

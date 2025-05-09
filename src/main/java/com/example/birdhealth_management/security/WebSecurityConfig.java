@@ -33,7 +33,7 @@ public class WebSecurityConfig {
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/signup", "/reset").permitAll()
+						.requestMatchers("/", "/login", "/signup", "/reset").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.anyRequest().authenticated()
 				)

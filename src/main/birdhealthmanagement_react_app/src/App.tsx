@@ -16,6 +16,8 @@ import AdminHome from './AdminHome';
 import Management from './Management';
 import Contact from './Contact';
 import PasswordReset from './PasswordReset';
+import AuthProvider from './components/security/AuthProvider';
+import AdminAuth from './components/security/AdminAuth';
 
 const App = () => {
 	const [selectedBird, setSelectedBird] = useState<BirdFormType>()
@@ -58,108 +60,116 @@ const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Router>
-				<Routes>
-					<Route path="/" element={<Navigate to="/login" />} />
-					<Route
-						path='/login'
-						element={
-							<Login
-								message={message}
-								setMessage={setMessage}
-							/>
-						}
-					/>
-					<Route path='/signup' element={<SignUp />} />
-					<Route path='/reset' element={<PasswordReset />} />
-					<Route
-						path='/'
-						element={
-							<AppLayout />
-						}
-					>
+			<AuthProvider>
+				<Router>
+					<Routes>
+						<Route path="/" element={<Navigate to="/login" />} />
 						<Route
-							path='home'
+							path='/login'
 							element={
-								<Home
-									monthlyRecords={monthlyRecords}
-									birdId={birdId}
-									userBirds={userBirds}
-									setUserBirds={setUserBirds}
-									birdHandleChange={birdHandleChange}
-									reRender={reRender}
-									setSelectedPeriod={setSelectedPeriod}
-									handleReRender={handleReRender}
+								<Login
 									message={message}
 									setMessage={setMessage}
 								/>
 							}
 						/>
-
+						<Route path='/signup' element={<SignUp />} />
+						<Route path='/reset' element={<PasswordReset />} />
 						<Route
-							path='mypage'
+							path='/'
 							element={
-								<MyPage
-									userBirds={userBirds}
-									setUserBirds={setUserBirds}
-									setSelectedBird={setSelectedBird}
-									selectedBird={selectedBird}
-									handleSelectedBird={handleSelectedBird}
-									reRender={reRender}
-									handleReRender={handleReRender}
-								/>
+								<AppLayout />
 							}
-						/>
+						>
+							<Route
+								path='home'
+								element={
+									<Home
+										monthlyRecords={monthlyRecords}
+										birdId={birdId}
+										userBirds={userBirds}
+										setUserBirds={setUserBirds}
+										birdHandleChange={birdHandleChange}
+										reRender={reRender}
+										setSelectedPeriod={setSelectedPeriod}
+										handleReRender={handleReRender}
+										message={message}
+										setMessage={setMessage}
+									/>
+								}
+							/>
 
-						<Route
-							path='chart'
-							element={
-								<Chart
-									userBirds={userBirds}
-									setUserBirds={setUserBirds}
-									reRender={reRender}
-									monthlyRecords={monthlyRecords}
-									birdId={birdId}
-									selectedPeriod={selectedPeriod}
-									setSelectedPeriod={setSelectedPeriod}
-									birdHandleChange={birdHandleChange}
-								/>
-							}
-						/>
+							<Route
+								path='mypage'
+								element={
+									<MyPage
+										userBirds={userBirds}
+										setUserBirds={setUserBirds}
+										setSelectedBird={setSelectedBird}
+										selectedBird={selectedBird}
+										handleSelectedBird={handleSelectedBird}
+										reRender={reRender}
+										handleReRender={handleReRender}
+									/>
+								}
+							/>
 
-						<Route
-							path='contact'
-							element={
-								<Contact
-									openDialog={openDialog}
-									setOpenDialog={setOpenDialog}
-									dialogMessage={dialogMessage}
-									setDialogMessage={setDialogMessage}
-								/>
-							}
-						/>
+							<Route
+								path='chart'
+								element={
+									<Chart
+										userBirds={userBirds}
+										setUserBirds={setUserBirds}
+										reRender={reRender}
+										monthlyRecords={monthlyRecords}
+										birdId={birdId}
+										selectedPeriod={selectedPeriod}
+										setSelectedPeriod={setSelectedPeriod}
+										birdHandleChange={birdHandleChange}
+									/>
+								}
+							/>
 
-						<Route path='*' element={<NoMatch />} />
-					</Route>
+							<Route
+								path='contact'
+								element={
+									<Contact
+										openDialog={openDialog}
+										setOpenDialog={setOpenDialog}
+										dialogMessage={dialogMessage}
+										setDialogMessage={setDialogMessage}
+									/>
+								}
+							/>
 
-					<Route path='/:role' element={<AppLayout />}>
-						<Route path='Home' element={<AdminHome />} />
-						<Route
-							path='management'
-							element={
-								<Management
-									openDialog={openDialog}
-									setOpenDialog={setOpenDialog}
-									dialogMessage={dialogMessage}
-									setDialogMessage={setDialogMessage}
-									reRender={reRender}
-									handleReRender={handleReRender}
-								/>
-							}
-						/>
-					</Route>
-				</Routes>
-			</Router>
+							<Route path='*' element={<NoMatch />} />
+						</Route>
+
+						<Route path=':role' element={<AppLayout />}>
+							<Route path='Home' element={
+								<AdminAuth>
+									<AdminHome />
+								</AdminAuth>
+							} />
+							<Route
+								path='management'
+								element={
+									<AdminAuth>
+										<Management
+											openDialog={openDialog}
+											setOpenDialog={setOpenDialog}
+											dialogMessage={dialogMessage}
+											setDialogMessage={setDialogMessage}
+											reRender={reRender}
+											handleReRender={handleReRender}
+										/>
+									</AdminAuth>
+								}
+							/>
+						</Route>
+					</Routes>
+				</Router>
+			</AuthProvider>
 		</ThemeProvider>
 	);
 }

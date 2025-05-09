@@ -5,6 +5,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { useAuth } from "./components/security/AuthProvider";
 
 
 type LoginInformation = {
@@ -20,6 +21,7 @@ interface LoginProps {
 
 const Login = ({ message, setMessage }: LoginProps) => {
 	const [loginError, setLoginError] = useState("");
+	const { setRole } = useAuth();
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { register, control, handleSubmit, formState: { errors } } = useForm<LoginInformation>({
@@ -62,9 +64,9 @@ const Login = ({ message, setMessage }: LoginProps) => {
 			})
 			.then(data => {
 				const role = data.role
-				//				setUserRole(role)
+				setRole(role)
 				if (role === 'ROLE_ADMIN') {
-					navigate(`/${role}/home`, { state: { loginSuccess: true } });
+					navigate('/admin/home', { state: { loginSuccess: true } });
 				} else {
 					navigate(`/home`, { state: { loginSuccess: true } });
 				}
