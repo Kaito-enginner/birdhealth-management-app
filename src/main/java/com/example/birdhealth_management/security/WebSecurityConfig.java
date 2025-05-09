@@ -38,7 +38,7 @@ public class WebSecurityConfig {
 						.anyRequest().authenticated()
 				)
 				.formLogin(form -> form
-						.loginPage("/")
+						.loginPage("/login")
 						.loginProcessingUrl("/login")
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)

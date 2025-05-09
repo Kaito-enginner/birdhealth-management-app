@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home';
 import Chart from './Chart';
 import MyPage from './MyPage';
@@ -60,8 +60,9 @@ const App = () => {
 			<CssBaseline />
 			<Router>
 				<Routes>
+					<Route path="/" element={<Navigate to="/login" />} />
 					<Route
-						path='/'
+						path='/login'
 						element={
 							<Login
 								message={message}
