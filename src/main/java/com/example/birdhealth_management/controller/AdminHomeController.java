@@ -2,7 +2,6 @@ package com.example.birdhealth_management.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ import com.example.birdhealth_management.repository.ContactRepository;
 import com.example.birdhealth_management.service.ContactService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
+//@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
 @RequestMapping("/adminhomepage")
 public class AdminHomeController {
 	private final ContactRepository contactRepository;
