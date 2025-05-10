@@ -1,0 +1,132 @@
+C:\pleiades\2024-09\birdhealth-management\birdhealth_management>heroku logs 
+ »   Warning: heroku update available from 10.0.2 to 10.7.0.
+2025-05-10T02:52:02.923408+00:00 app[web.1]: :: Spring Boot ::                (v3.4.4)
+2025-05-10T02:52:02.923416+00:00 app[web.1]: 
+2025-05-10T02:52:03.007452+00:00 app[web.1]: 2025-05-10T02:52:03.005Z  INFO 2 --- [birdhealth_management] [           main] c.e.b.BirdhealthManagementApplication    : Starting BirdhealthManagementApplication v0.0.1-SNAPSHOT using Java 23.0.2 with PID 2 (/app/target/birdhealth_management-0.0.1-SNAPSHOT.jar started by u57404 in /app)
+2025-05-10T02:52:03.008152+00:00 app[web.1]: 2025-05-10T02:52:03.008Z  INFO 2 --- [birdhealth_management] [           main] c.e.b.BirdhealthManagementApplication    : The following 1 profile is active: "production"
+2025-05-10T02:52:04.000000+00:00 app[api]: Build succeeded
+2025-05-10T02:52:04.086678+00:00 app[web.1]: 2025-05-10T02:52:04.086Z  INFO 2 --- [birdhealth_management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.    
+2025-05-10T02:52:04.150014+00:00 app[web.1]: 2025-05-10T02:52:04.149Z  INFO 2 --- [birdhealth_management] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 55 ms. Found 5 JPA repository interfaces.
+2025-05-10T02:52:04.915334+00:00 app[web.1]: 2025-05-10T02:52:04.915Z  INFO 2 --- [birdhealth_management] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 23830 (http)
+2025-05-10T02:52:04.928239+00:00 app[web.1]: 2025-05-10T02:52:04.928Z  INFO 2 --- [birdhealth_management] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-10T02:52:04.928420+00:00 app[web.1]: 2025-05-10T02:52:04.928Z  INFO 2 --- [birdhealth_management] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-05-10T02:52:04.952012+00:00 app[web.1]: 2025-05-10T02:52:04.951Z  INFO 2 --- [birdhealth_management] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-10T02:52:04.953010+00:00 app[web.1]: 2025-05-10T02:52:04.952Z  INFO 2 --- [birdhealth_management] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1876 ms
+2025-05-10T02:52:05.235860+00:00 app[web.1]: 2025-05-10T02:52:05.234Z  INFO 2 --- [birdhealth_management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-10T02:52:05.563681+00:00 app[web.1]: 2025-05-10T02:52:05.563Z  INFO 2 --- [birdhealth_management] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4c030fe1
+2025-05-10T02:52:05.565167+00:00 app[web.1]: 2025-05-10T02:52:05.565Z  INFO 2 --- [birdhealth_management] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-10T02:52:06.129388+00:00 app[web.1]: 2025-05-10T02:52:06.129Z  INFO 2 --- [birdhealth_management] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]      
+2025-05-10T02:52:06.171188+00:00 app[web.1]: 2025-05-10T02:52:06.170Z  INFO 2 --- [birdhealth_management] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-05-10T02:52:06.202226+00:00 app[web.1]: 2025-05-10T02:52:06.202Z  INFO 2 --- [birdhealth_management] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-10T02:52:06.446039+00:00 app[web.1]: 2025-05-10T02:52:06.445Z  INFO 2 --- [birdhealth_management] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer        
+2025-05-10T02:52:06.516854+00:00 app[web.1]: 2025-05-10T02:52:06.516Z  WARN 2 --- [birdhealth_management] [           main] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.5 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2025-05-10T02:52:06.531486+00:00 app[web.1]: 2025-05-10T02:52:06.531Z  INFO 2 --- [birdhealth_management] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-05-10T02:52:06.531488+00:00 app[web.1]: Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+2025-05-10T02:52:06.531488+00:00 app[web.1]: Database driver: undefined/unknown
+2025-05-10T02:52:06.531489+00:00 app[web.1]: Database version: 5.5.5
+2025-05-10T02:52:06.531489+00:00 app[web.1]: Autocommit mode: undefined/unknown
+2025-05-10T02:52:06.531490+00:00 app[web.1]: Isolation level: undefined/unknown
+2025-05-10T02:52:06.531490+00:00 app[web.1]: Minimum pool size: undefined/unknown
+2025-05-10T02:52:06.531490+00:00 app[web.1]: Maximum pool size: undefined/unknown
+2025-05-10T02:52:07.280275+00:00 app[web.1]: 2025-05-10T02:52:07.279Z  INFO 2 --- [birdhealth_management] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-10T02:52:07.283226+00:00 app[web.1]: 2025-05-10T02:52:07.283Z  INFO 2 --- [birdhealth_management] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-10T02:52:07.631622+00:00 app[web.1]: 2025-05-10T02:52:07.631Z  INFO 2 --- [birdhealth_management] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-05-10T02:52:08.352282+00:00 app[web.1]: 2025-05-10T02:52:08.351Z  WARN 2 --- [birdhealth_management] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-10T02:52:08.400217+00:00 app[web.1]: 2025-05-10T02:52:08.399Z  INFO 2 --- [birdhealth_management] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsServiceImpl
+2025-05-10T02:52:08.804864+00:00 app[web.1]: 2025-05-10T02:52:08.804Z  INFO 2 --- [birdhealth_management] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2025-05-10T02:52:09.400204+00:00 app[web.1]: 2025-05-10T02:52:09.399Z  INFO 2 --- [birdhealth_management] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 23830 (http) with context path '/'      
+2025-05-10T02:52:09.412612+00:00 app[web.1]: 2025-05-10T02:52:09.412Z  INFO 2 --- [birdhealth_management] [           main] c.e.b.BirdhealthManagementApplication    : Started BirdhealthManagementApplication in 6.844 seconds (process running for 7.393)
+2025-05-10T02:52:09.622420+00:00 heroku[web.1]: State changed from starting to up
+2025-05-10T02:52:20.046245+00:00 app[web.1]: 2025-05-10T02:52:20.046Z  INFO 2 --- [birdhealth_management] [io-23830-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'      
+2025-05-10T02:52:20.046389+00:00 app[web.1]: 2025-05-10T02:52:20.046Z  INFO 2 --- [birdhealth_management] [io-23830-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-05-10T02:52:20.047958+00:00 app[web.1]: 2025-05-10T02:52:20.047Z  INFO 2 --- [birdhealth_management] [io-23830-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-05-10T02:52:20.165961+00:00 heroku[router]: at=info method=GET path="/" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=5a94394b-32b2-e743-2b0d-71eb154bf3e4 fwd="119.63.183.87" dyno=web.1 connect=0ms service=143ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:20.374108+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=34852ade-0b79-3f74-76cd-3fb4f1bc385c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=11ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:20.577623+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=dbf23a5c-d651-680f-fa20-d7b48f95f79c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=8ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:20.777462+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=fa08f9dc-d4a1-8b24-dfcb-eded2360750d fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=8ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:20.980478+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=549af6ff-56f4-15cb-b5a6-a250f0aff9db fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=9ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:21.183352+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=77d51338-a5fa-ab5f-2072-a5a81cf383ed fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=7ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:21.386944+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=02210ddb-dfb9-f1b5-b149-d98519ba3a99 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=7ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:21.587442+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=e34c8601-43fa-2f97-34e5-a9a8b14c0215 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=7ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:21.792777+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=a476cda2-bc40-daba-4910-cc27fbf33da1 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:21.994249+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=6a4b5b7d-3c14-4614-d8a5-15e3bf4165d6 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:22.197943+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=23686b39-1c66-ebc7-a627-d54199a66343 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=8ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:22.399125+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=be0ea4a7-4c35-69b5-9ded-45134946607c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:22.600138+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=10c3b9cd-e50b-e5bf-334f-ae692246c694 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:22.800618+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=37981700-b736-d275-22f3-fc928f642fff fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:23.001777+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=3da59957-4a37-adc3-24fb-0c7d72138452 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:23.206113+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=d984d3cc-d12e-e712-def1-0a8938f5efe4 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:23.405434+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=befc564e-2840-087c-4b53-4c93fbc546fa fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:23.604917+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=963feb74-7f04-40a8-c740-22c0536a6404 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:23.805863+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=9f353a2d-dee7-1d1e-ae9b-7de7f871c638 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:24.002788+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=24ff1116-707b-d850-cc25-593aa4bd1ea5 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:25.251375+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=61d18a6c-dea4-2d36-9eaf-8d7e6b9234fa fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:25.450796+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=ab647658-aaa3-7511-b733-e5d43a9effa8 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:25.650890+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=fdebc11d-bcba-313c-6968-7543c44cde7c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:25.855711+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=0ccdf1e4-1a3d-9a7a-1109-ee607ca4c78b fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:26.061094+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=189565c4-2c29-2ef5-9f20-9122b9227207 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:26.261097+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=400ee87d-c285-6075-6a5b-8d9909e5de4f fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:26.460302+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=508bb360-866a-0805-5cd9-b474bcdfb3be fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:26.661852+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=0ba793ce-9fe2-bf50-5ebf-9fa4ec152802 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:26.862184+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=62781b2f-809f-1b48-2a0f-044d09bbd8a0 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:27.063413+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=099ff061-f112-3d70-4c29-8a42f8d1e171 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=6ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:27.263395+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=ef01a73c-ffe0-5be2-bc4f-e510b59a14bf fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:27.462694+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=fa170d5e-f81c-c256-3559-4a9fb5e64ed7 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:27.664119+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=5d07c033-bc16-6b95-955d-f87a4216a300 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=8ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:27.863331+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=39c5bfbf-80fd-ef01-8469-319297274827 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:28.061755+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=07f57496-d2fa-21ca-7153-4ed16f252e47 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:28.260007+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=6ca73a01-92da-f721-3e20-f440f790f8d5 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:28.460805+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=4b288b1b-1d53-dde9-b851-a8d87ab78b7f fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:28.658248+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=29932934-04d1-857b-1077-ae25e321aad7 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:28.856888+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=6b25bdb4-cf44-37cc-6945-b2d9a9ab2487 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:29.054884+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=a8bcbb5e-c012-413b-985f-40bfb0186292 fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:34.275488+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=76aa251a-f290-a4ee-e81f-29af8f7ed96c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:34.474381+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=8e6bb5c3-4a99-e09f-2bec-23088d7c1a4c fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:34.673103+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=090acc3c-5de8-a4c4-a48f-90cca44669bc fwd="119.63.183.87" dyno=web.1 connect=0ms
+ service=5ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:34.875196+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27 service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:37.083763+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=7df84048-4e89-397f-50af-c425facab18c fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown2025-05-10T02:52:37.295412+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=f4efd39d-130d-ec3d-ec3b-db7547aceb89 fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:37.493549+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=6e139069-e041-d221-676b-7497d64122a8 fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:37.695009+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=b1e38252-04ec-eec1-de8a-3ecc009bfc32 fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown2025-05-10T02:52:37.891557+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=d31deeb2-796a-ad32-4112-502e9c2c4e49 fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
+2025-05-10T02:52:38.095761+00:00 heroku[router]: at=info method=GET path="/login" host=birdhealth-management-app-27d56d6b11df.herokuapp.com request_id=4b33ea78-d855-aa28-2cf4-1d7218eeeef8 fwd="119.63.183.87" dyno=web.1 connect=0ms service=4ms status=302 bytes=0 protocol=http1.1 tls=true tls_version=unknown
