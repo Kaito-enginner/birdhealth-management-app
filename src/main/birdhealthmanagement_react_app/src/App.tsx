@@ -50,6 +50,7 @@ const App = () => {
 					return res.json()
 				})
 				.then((data) => {
+					console.log("レスポンス内容:", data);
 					return setMonthlyRecords(data)
 				})
 				.catch(error => console.error("リクエストエラー:", error));

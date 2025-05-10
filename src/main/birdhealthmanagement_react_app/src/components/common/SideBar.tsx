@@ -38,11 +38,11 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 	const handleLogout = async () => {
 		try {
 			await Logout();
-			navigate("/");
 		} catch (error) {
 			console.error(error);
 			alert("ログアウトに失敗しました");
 		}
+		navigate("/");
 		setRole(null);
 	};
 

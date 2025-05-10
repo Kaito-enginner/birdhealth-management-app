@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 const AdminAuth = ({ children }: { children: JSX.Element }) => {
 	const { roleState } = useAuth();
 	
-	if(!roleState) return <Navigate to="/login" />;
+	if(!roleState) return <Navigate to="/" />;
 	
 	if(roleState !== "ROLE_ADMIN")return <Navigate to="/home" />;
 	
