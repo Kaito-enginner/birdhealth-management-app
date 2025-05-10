@@ -5,7 +5,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ForwardController {
-	@RequestMapping(value = { "/", "/{path:[^\\.]*}" })
+
+	@RequestMapping(value = {
+			"/", "/signup", "/reset",
+			"/home", "/mypage", "/chart", "/contact",
+			"/admin/**",
+			"/{x:[\\w\\-]+}", "/{x:^(?!api|dist|static|.*\\..*$).*$}/**"
+	})
 	public String forward() {
 		return "forward:/dist/index.html";
 	}

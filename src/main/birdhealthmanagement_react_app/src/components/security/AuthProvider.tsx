@@ -7,9 +7,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const [roleState, setRoleState] = useState<string | null>(() => {
-		return sessionStorage.getItem("role");
-	});
+	const [roleState, setRoleState] = useState<string | null>(null);
 
 	const setRole = (newRole: string | null) => {
 		if (newRole) {
