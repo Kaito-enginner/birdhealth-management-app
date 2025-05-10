@@ -11,6 +11,7 @@ interface PassWordEditFormProps {
 }
 
 const PassWordEditForm = ({ handleClose }:PassWordEditFormProps) => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const [showPassword, setShowPassword] = useState(false);
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -33,7 +34,7 @@ const PassWordEditForm = ({ handleClose }:PassWordEditFormProps) => {
 
 	// 送信処理(パスワードを編集)
 	const submitEditedPassword: SubmitHandler<PasswordEditFormType> = (data: PasswordEditFormType) => {
-		fetch(`http://localhost:8080/mypage/useredit/pass`, {
+		fetch(`${BASE_URL}/mypage/useredit/pass`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

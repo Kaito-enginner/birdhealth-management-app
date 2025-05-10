@@ -9,6 +9,7 @@ interface ContactFormProps {
 	setDialogMessage: React.Dispatch<React.SetStateAction<string>>;
 }
 export const ContactForm = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage }: ContactFormProps) => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const { register, control, reset, handleSubmit, formState: { errors } } = useForm<ContactFormType>({
 		defaultValues: {
 			email: '',
@@ -23,7 +24,7 @@ export const ContactForm = ({ openDialog, setOpenDialog, dialogMessage, setDialo
 
 	// 送信処理(お問い合わせ内容を送信)
 	const submitContactInformation: SubmitHandler<ContactFormType> = (data: ContactFormType) => {
-		fetch(`http://localhost:8080/contactpage`, {
+		fetch(`${BASE_URL}$/contactpage`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

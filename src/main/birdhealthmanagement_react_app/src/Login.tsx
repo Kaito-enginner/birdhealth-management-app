@@ -20,6 +20,7 @@ interface LoginProps {
 
 
 const Login = ({ message, setMessage }: LoginProps) => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const [loginError, setLoginError] = useState("");
 	const { setRole } = useAuth();
 	const location = useLocation();
@@ -47,7 +48,7 @@ const Login = ({ message, setMessage }: LoginProps) => {
 		formData.append('username', data.email);
 		formData.append('password', data.password);
 
-		fetch('http://localhost:8080/login', {
+		fetch(`${BASE_URL}/api/login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'

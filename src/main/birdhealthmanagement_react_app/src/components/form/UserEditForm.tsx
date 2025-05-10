@@ -10,6 +10,7 @@ interface UserEditFormProps {
 }
 
 const UserEditForm = ({ userBirds, handleClose, handleReRender }: UserEditFormProps) => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const { register, control, handleSubmit, setError, formState: { errors } } = useForm<UserEditFormType>({
 		defaultValues: {
 			name: userBirds && userBirds.userName,
@@ -20,7 +21,7 @@ const UserEditForm = ({ userBirds, handleClose, handleReRender }: UserEditFormPr
 
 	// 送信処理(ユーザー情報を編集)
 	const submitEditedUserInformation: SubmitHandler<UserEditFormType> = (data: UserEditFormType) => {
-		fetch(`http://localhost:8080/mypage/useredit`, {
+		fetch(`${BASE_URL}/mypage/useredit`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

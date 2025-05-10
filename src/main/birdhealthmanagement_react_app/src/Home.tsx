@@ -19,10 +19,11 @@ interface HomeProps {
 
 const Home = ({ monthlyRecords, userBirds, setUserBirds, birdId, birdHandleChange, reRender, setSelectedPeriod, handleReRender, message, setMessage }: HomeProps) => {
 	const location = useLocation();
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 	// ユーザー＋愛鳥さんの情報を取得
 	useEffect(() => {
-		fetch(`http://localhost:8080/mypage`, {
+		fetch(`${BASE_URL}/mypage`, {
 			method: 'GET',
 			credentials: 'include'
 		})

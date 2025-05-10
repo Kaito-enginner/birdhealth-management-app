@@ -38,12 +38,13 @@ public class WebSecurityConfig {
 		return http
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/", "/login", "/signup", "/reset").permitAll()
+				    .requestMatchers("/", "/login", "/signup", "/reset").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.anyRequest().authenticated()
 				)
 				.formLogin(form -> form
 						.loginPage("/login")
+						.loginProcessingUrl("/api/login")
 						.successHandler(successHandler)
 						.failureHandler(failureHandler)
 						.permitAll()

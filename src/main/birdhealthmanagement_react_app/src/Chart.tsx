@@ -16,10 +16,11 @@ interface ChartPrps {
 }
 
 const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selectedPeriod, setSelectedPeriod, birdHandleChange}: ChartPrps) => {
-	
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 	// ユーザー＋愛鳥情報を取得
 	useEffect(() => {
-			    fetch(`http://localhost:8080/mypage`, {
+			    fetch(`${BASE_URL}/mypage`, {
 					method: 'GET',
 					credentials: 'include'
 				})

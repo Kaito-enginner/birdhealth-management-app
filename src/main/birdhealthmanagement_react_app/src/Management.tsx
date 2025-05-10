@@ -24,6 +24,7 @@ interface ManagementProps {
 
 const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage, reRender, handleReRender }: ManagementProps) => {
 	const [users, setUsers] = useState<UserType[]>([])
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 	// フォーカスをはずす
 	const removeForcus = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -31,7 +32,7 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 	}
 
 	useEffect(() => {
-		fetch('http://localhost:8080/managementpage', {
+		fetch(`${BASE_URL}/managementpage`, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -55,7 +56,7 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 	}, [users])
 
 	const handleDelete = (id: number) => {
-		fetch('http://localhost:8080/managementpage/delete', {
+		fetch(`${BASE_URL}/managementpage/delete`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {

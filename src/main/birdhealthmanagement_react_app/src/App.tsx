@@ -20,6 +20,7 @@ import AuthProvider from './components/security/AuthProvider';
 import AdminAuth from './components/security/AdminAuth';
 
 const App = () => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const [selectedBird, setSelectedBird] = useState<BirdFormType>()
 	const handleSelectedBird = (bird: BirdFormType): void => setSelectedBird(bird)
 	const [userBirds, setUserBirds] = useState<UserBirdDto>();
@@ -42,7 +43,7 @@ const App = () => {
 	// 特定の愛鳥の特定の日付の健康記録を取得する
 	useEffect(() => {
 		if (birdId && selectedPeriod) {
-			fetch(`http://localhost:8080/chartpage/${birdId}/${selectedPeriod}`, {
+			fetch(`${BASE_URL}/chartpage/${birdId}/${selectedPeriod}`, {
 				method: 'GET',
 				credentials: 'include'
 			})
@@ -63,7 +64,7 @@ const App = () => {
 			<AuthProvider>
 				<Router>
 					<Routes>
-						<Route path="/" element={<Navigate to="/login" />} />
+						<Route path='/' element={<Navigate to="/login" />} />
 						<Route
 							path='/login'
 							element={

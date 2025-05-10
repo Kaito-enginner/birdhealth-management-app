@@ -110,15 +110,16 @@ interface EnhancedTableToolbarProps {
 	statusFilter: 'all' | '対応' | '未対応';
 	setStatusFilter: React.Dispatch<React.SetStateAction<'all' | '対応' | '未対応'>>;
 	selected: readonly number[];
-	setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>
+	setSelected: React.Dispatch<React.SetStateAction<readonly number[]>>;
+	BASE_URL: string;
 }
 
 // ツールバー
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-	const { numSelected, statusFilter, setStatusFilter, selected, setSelected } = props;
+	const { numSelected, statusFilter, setStatusFilter, selected, setSelected, BASE_URL } = props;
 
 	const handleStatusChange = () => {
-		fetch('http://localhost:8080/adminhomepage/complete', {
+		fetch(`${BASE_URL}/adminhomepage/complete`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -180,6 +181,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 // メインコンテンツ
 export default function AdminHome() {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const [selected, setSelected] = useState<readonly number[]>([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -190,7 +192,7 @@ export default function AdminHome() {
 
 	// 全てのお問い合わせ情報を取得
 	useEffect(() => {
-		fetch('http://localhost:8080/adminhomepage', {
+		fetch(`${BASE_URL}/adminhomepage`, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -277,6 +279,7 @@ export default function AdminHome() {
 					setStatusFilter={setStatusFilter}
 					selected={selected}
 					setSelected={setSelected}
+					BASE_URL={BASE_URL}
 				/>
 				<TableContainer>
 					<Table

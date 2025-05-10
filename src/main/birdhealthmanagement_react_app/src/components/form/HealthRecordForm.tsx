@@ -14,7 +14,7 @@ interface HealthRecordFormProps {
 
 
 const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleReRender, selectEvent }: HealthRecordFormProps) => {
-
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const { register, control, handleSubmit, setValue, formState: { errors } } = useForm<HealthRecordFormType>({
 		defaultValues: {
 			id: selectEvent && selectEvent.id,
@@ -28,7 +28,7 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 	// 送信処理(健康記録を登録)
 	const submitCreatedHealthRecord: SubmitHandler<HealthRecordFormType> = (data: HealthRecordFormType) => {
-		fetch(`http://localhost:8080/homepage/${birdId}/${clickDate}/register`, {
+		fetch(`${BASE_URL}/homepage/${birdId}/${clickDate}/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
@@ -42,23 +42,23 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 			})
 			.catch(error => console.error("リクエストエラー:", error));
 	}
-	
+
 	// 送信処理(健康記録を編集)
-		const submitEditedHealthRecord: SubmitHandler<HealthRecordFormType> = (data: HealthRecordFormType) => {
-			fetch(`http://localhost:8080/homepage/${birdId}/edit`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json' // JSON形式のデータであることを宣言
-				},
-				body: JSON.stringify(data), // JSON形式に変換する
-				credentials: 'include'
+	const submitEditedHealthRecord: SubmitHandler<HealthRecordFormType> = (data: HealthRecordFormType) => {
+		fetch(`${BASE_URL}/homepage/${birdId}/edit`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
+			},
+			body: JSON.stringify(data), // JSON形式に変換する
+			credentials: 'include'
+		})
+			.then(() => {
+				handleCalendarModalClose()
+				handleReRender()
 			})
-				.then(() => {
-					handleCalendarModalClose()
-					handleReRender()
-				})
-				.catch(error => console.error("リクエストエラー:", error));
-		}
+			.catch(error => console.error("リクエストエラー:", error));
+	}
 
 	useEffect(() => {
 		if (selectEvent) {
@@ -73,8 +73,8 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(selectEvent ? submitEditedHealthRecord : submitCreatedHealthRecord)}>
-			<Stack spacing={2} sx={{ textAlign: 'center'}}>
-				<Typography variant="h6" component="h2">{selectEvent ? '健康記録編集' : '健康記録入力' }</Typography>
+			<Stack spacing={2} sx={{ textAlign: 'center' }}>
+				<Typography variant="h6" component="h2">{selectEvent ? '健康記録編集' : '健康記録入力'}</Typography>
 				{/* ID */}
 				{selectEvent &&
 					<Controller

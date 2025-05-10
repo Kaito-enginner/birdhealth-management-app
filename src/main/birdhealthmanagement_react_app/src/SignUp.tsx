@@ -8,6 +8,7 @@ import { UserFormType } from "./type/type";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const SignUp = () => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const navigate = useNavigate();
 
 	const { register, control, handleSubmit, watch, setError, formState: { errors } } = useForm<UserFormType>({
@@ -35,7 +36,7 @@ const SignUp = () => {
 		event.preventDefault();
 	};
 	const createUser: SubmitHandler<UserFormType> = (data: UserFormType) => {
-		fetch('http://localhost:8080/signup', {
+		fetch(`${BASE_URL}/signup`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -74,7 +75,7 @@ const SignUp = () => {
 			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', pt: '3rem' }}>
 				<Paper sx={{ p: '2rem' }}>
 					<form onSubmit={handleSubmit(createUser)}>
-						<Stack spacing={2} sx={{ textAlign: 'center'}}>
+						<Stack spacing={2} sx={{ textAlign: 'center' }}>
 							<Typography variant="h5">会員登録</Typography>
 
 							{/* 名前 */}

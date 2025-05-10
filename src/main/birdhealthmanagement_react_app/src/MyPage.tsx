@@ -18,6 +18,7 @@ interface MyPageProps {
 }
 
 const MyPage = ({ handleSelectedBird, selectedBird, setSelectedBird, userBirds, setUserBirds, reRender, handleReRender }: MyPageProps) => {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const [open, setOpen] = useState(false);
 	const [selectedUserEdit, setSelectedUserEdit] = useState(false)
 	const [selectedPasswordEdit, setSelectedPasswordEdit] = useState(false);
@@ -40,7 +41,7 @@ const MyPage = ({ handleSelectedBird, selectedBird, setSelectedBird, userBirds, 
 
 	// ユーザー＋愛鳥さんの情報を取得
 	useEffect(() => {
-		fetch(`http://localhost:8080/mypage`, {
+		fetch(`${BASE_URL}/mypage`, {
 			method: 'GET',
 			credentials: 'include'
 		})

@@ -15,6 +15,7 @@ interface BirdRegsterFormProps {
 const currentDay = format(new Date(), 'yyyy-MM-dd');
 
 export default function BirdRegsterForm({ selectedBird, handleClose, handleReRender }: BirdRegsterFormProps) {
+	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 	const { register, control, handleSubmit, formState: { errors }, setValue } = useForm<BirdFormType>({
 		defaultValues: {
 			id: selectedBird && selectedBird.id,
@@ -27,7 +28,7 @@ export default function BirdRegsterForm({ selectedBird, handleClose, handleReRen
 
 	// 送信処理(愛鳥情報を登録)
 	const submitCreatedBirdInformation: SubmitHandler<BirdFormType> = (data: BirdFormType) => {
-		fetch(`http://localhost:8080/mypage/birdregister`, {
+		fetch(`${BASE_URL}/mypage/birdregister`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
@@ -44,7 +45,7 @@ export default function BirdRegsterForm({ selectedBird, handleClose, handleReRen
 
 	// 送信処理(愛鳥情報を編集)
 	const submitEditedBirdInformation: SubmitHandler<BirdFormType> = (data: BirdFormType) => {
-		fetch('http://localhost:8080/mypage/birdedit', {
+		fetch(`${BASE_URL}/mypage/birdedit`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
