@@ -119,7 +119,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 	const { numSelected, statusFilter, setStatusFilter, selected, setSelected, BASE_URL } = props;
 
 	const handleStatusChange = () => {
-		fetch(`${BASE_URL}/adminhomepage/complete`, {
+		fetch(`${BASE_URL}/api/adminhomepage/complete`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ export default function AdminHome() {
 
 	// 全てのお問い合わせ情報を取得
 	useEffect(() => {
-		fetch(`${BASE_URL}/adminhomepage`, {
+		fetch(`${BASE_URL}/api/adminhomepage`, {
 			method: 'GET',
 			credentials: 'include'
 		})

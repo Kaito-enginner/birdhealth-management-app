@@ -17,10 +17,10 @@ public class EmailService {
 		String subject = "お問い合わせが届きました。";
 		String text = "お問い合わせの内容を確認して対応してください。";
 
-		message.setFrom(email);
+		message.setFrom("hatopegu@fuwari.be");
 		message.setTo("taro.tanaka@example.com");
 		message.setSubject(subject);
-		message.setText(text + "\n" + "お問い合わせ内容：" + content);
+		message.setText(text + "\n" + email + "\n" + "お問い合わせ内容：" + content);
 		mailSender.send(message);
 	}
 	
@@ -30,7 +30,7 @@ public class EmailService {
 		String subject = "仮パスワードを発行しました。";
 		String text = "下記のパスワードを用いてログインし、直ちにパスワードの再設定をお願いいたします。";
 
-		message.setFrom("taro.tanaka@example.com");
+		message.setFrom("hatopegu@fuwari.bem");
 		message.setTo(email);
 		message.setSubject(subject);
 		message.setText(text + "\n" + "パスワード：" + token);

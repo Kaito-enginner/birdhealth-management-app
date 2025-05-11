@@ -21,7 +21,7 @@ const UserEditForm = ({ userBirds, handleClose, handleReRender }: UserEditFormPr
 
 	// 送信処理(ユーザー情報を編集)
 	const submitEditedUserInformation: SubmitHandler<UserEditFormType> = (data: UserEditFormType) => {
-		fetch(`${BASE_URL}/mypage/useredit`, {
+		fetch(`${BASE_URL}/api/mypage/useredit`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

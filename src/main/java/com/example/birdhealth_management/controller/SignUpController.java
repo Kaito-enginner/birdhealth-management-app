@@ -10,7 +10,7 @@ import com.example.birdhealth_management.service.UserService;
 
 @RestController
 //@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
-@RequestMapping("/signup")
+@RequestMapping("/api/signup")
 public class SignUpController {
 	private final UserService userService;
 	
@@ -19,7 +19,7 @@ public class SignUpController {
 	}
 	
 	@PostMapping
-	public void registerNewUser(@RequestBody User userData) {
-		userService.create(userData);
+	public void registerNewUser(@RequestBody User user) {
+		userService.create(user);
 	}
 }

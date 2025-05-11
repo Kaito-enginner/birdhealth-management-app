@@ -57,6 +57,7 @@ public class UserDetailsImpl implements UserDetails {
 	// ユーザーが有効であればtrueを返す
 	@Override
 	public boolean isEnabled() {
-		return true;
+		if(user.getEnabled() == true) return true;
+		return false;
 	}
 }

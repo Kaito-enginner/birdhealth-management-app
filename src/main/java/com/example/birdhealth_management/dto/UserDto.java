@@ -9,6 +9,7 @@ public class UserDto {
 	private Integer id;
 	private String name;
 	private String email;
+	private Boolean enabled;
 	private Integer consecutive_login_days;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;

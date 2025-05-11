@@ -54,7 +54,7 @@ const Login = ({ message, setMessage }: LoginProps) => {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
 			body: formData.toString(),
-			credentials: 'include' // ← セッションのCookie送受信に必要
+			credentials: 'include'
 		})
 			.then(async (response) => {
 				if (!response.ok) {
@@ -73,7 +73,6 @@ const Login = ({ message, setMessage }: LoginProps) => {
 				}
 			})
 			.catch(error => {
-				console.error("ログインエラー:", error)
 				setLoginError(error.message)
 			});
 	}

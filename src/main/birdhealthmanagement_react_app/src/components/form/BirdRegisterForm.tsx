@@ -28,7 +28,7 @@ export default function BirdRegsterForm({ selectedBird, handleClose, handleReRen
 
 	// 送信処理(愛鳥情報を登録)
 	const submitCreatedBirdInformation: SubmitHandler<BirdFormType> = (data: BirdFormType) => {
-		fetch(`${BASE_URL}/mypage/birdregister`, {
+		fetch(`${BASE_URL}/api/mypage/birdregister`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
@@ -45,7 +45,7 @@ export default function BirdRegsterForm({ selectedBird, handleClose, handleReRen
 
 	// 送信処理(愛鳥情報を編集)
 	const submitEditedBirdInformation: SubmitHandler<BirdFormType> = (data: BirdFormType) => {
-		fetch(`${BASE_URL}/mypage/birdedit`, {
+		fetch(`${BASE_URL}/api/mypage/birdedit`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言

@@ -10,12 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.birdhealth_management.dto.PasswordResetRequestDto;
 import com.example.birdhealth_management.dto.UserDto;
 import com.example.birdhealth_management.entity.Role;
 import com.example.birdhealth_management.entity.User;
 import com.example.birdhealth_management.exception.EmailAlreadyExistsException;
 import com.example.birdhealth_management.exception.EmailNotFoundException;
+import com.example.birdhealth_management.exception.UserNotFoundException;
 import com.example.birdhealth_management.repository.RoleRepository;
 import com.example.birdhealth_management.repository.UserRepository;
 
@@ -35,58 +35,59 @@ public class UserService {
 	}
 
 	@Transactional
-	public void create(User userData) {
+	public void create(User user) {
 		User newUser = new User();
 		Role role = roleRepository.findByName("ROLE_GENERAL");
 
-		emailDuplicateCheck(userData.getEmail());
+		emailDuplicateCheck(user.getEmail());
 
-		newUser.setName(userData.getName());
-		newUser.setEmail(userData.getEmail());
-		newUser.setPassword(encryptPassword(userData.getPassword()));
+		newUser.setName(user.getName());
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(encryptPassword(user.getPassword()));
+		newUser.setEnabled(true);
 		newUser.setConsecutive_login_days(1);
 		newUser.setRole(role);
 
 		userRepository.save(newUser);
 	}
-	
-	// ログイン日数を増加する
+
 	@Transactional
-	public void loginDaysCountUp(User user) {
-		LocalDate lastLoginDate = user.getUpdatedAt().toLocalDateTime().toLocalDate();
-    LocalDate today = LocalDate.now();
-    
-    if(!today.equals(lastLoginDate)) {
-    	Integer loginDays = user.getConsecutive_login_days();		
-  		Integer updatedLoginDays = loginDays + 1;
-  		
-  		user.setConsecutive_login_days(updatedLoginDays);
-  		userRepository.save(user);
-    }
+	public void update(User updateuser, User user) {
+		emailDuplicateCheck(user.getEmail());
+
+		updateuser.setName(user.getName());
+		updateuser.setEmail(user.getEmail());
+
+		userRepository.save(updateuser);
 	}
 
 	@Transactional
-	public void update(User loginUser, User userData) {
-		emailDuplicateCheck(userData.getEmail());
+	public User disable(Integer id) throws UserNotFoundException {
+		User user = userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException("ユーザーが見つかりません。"));
 
-		loginUser.setName(userData.getName());
-		loginUser.setEmail(userData.getEmail());
-
-		userRepository.save(loginUser);
-	}
-
-	@Transactional
-	public void passwordUpdate(User loginUser, User userData) {
-		loginUser.setPassword(encryptPassword(userData.getPassword()));
+		if (user.getEnabled()) {
+			user.setEnabled(false);
+		} else {
+			user.setEnabled(true);
+		}
 		
-		userRepository.save(loginUser);
+		userRepository.save(user);
+		return user;
 	}
 
 	@Transactional
-	public void passwordReset(PasswordResetRequestDto resetEmail) {
-		String email = resetEmail.getEmail();
+	public void passwordUpdate(User updateuser, User user) {
+		updateuser.setPassword(encryptPassword(user.getPassword()));
+
+		userRepository.save(updateuser);
+	}
+
+	// 仮パスワード発行
+	@Transactional
+	public void passwordReset(String email) {
 		User updateUser = userRepository.findByEmail(email);
-		
+
 		if (Objects.isNull(updateUser)) {
 			throw new EmailNotFoundException("該当のメールアドレスが見つかりません。");
 		}
@@ -96,7 +97,7 @@ public class UserService {
 		updateUser.setPassword(encryptPassword(token));
 
 		userRepository.save(updateUser);
-		
+
 		emailService.sendResetMail(email, token);
 	}
 
@@ -114,23 +115,39 @@ public class UserService {
 		String encodedPassword = passwordEncoder.encode(password);
 		return encodedPassword;
 	}
-	
-// User型→UserDtoに変換
+
+	// ログイン日数を増加する
+	@Transactional
+	public void loginDaysCountUp(User user) {
+		LocalDate lastLoginDate = user.getUpdatedAt().toLocalDateTime().toLocalDate();
+		LocalDate today = LocalDate.now();
+
+		if (!today.equals(lastLoginDate)) {
+			Integer loginDays = user.getConsecutive_login_days();
+			Integer updatedLoginDays = loginDays + 1;
+
+			user.setConsecutive_login_days(updatedLoginDays);
+			userRepository.save(user);
+		}
+	}
+
+	// User型→UserDtoに変換
 	public List<UserDto> convertToDto(List<User> users) {
 		List<UserDto> userDtos = new ArrayList<UserDto>();
 		for (int i = 0; i < users.size(); i++) {
 			User user = users.get(i);
 			UserDto userDto = new UserDto();
-			
+
 			userDto.setId(user.getId());
 			userDto.setName(user.getName());
 			userDto.setEmail(user.getEmail());
+			userDto.setEnabled(user.getEnabled());
 			userDto.setConsecutive_login_days(user.getConsecutive_login_days());
 			userDto.setCreatedAt(user.getCreatedAt());
 			userDto.setUpdatedAt(user.getUpdatedAt());
-			
+
 			userDtos.add(userDto);
-			
+
 		}
 
 		return userDtos;

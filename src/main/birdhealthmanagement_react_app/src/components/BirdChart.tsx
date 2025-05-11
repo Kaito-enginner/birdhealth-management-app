@@ -13,6 +13,8 @@ import {
 	LineElement,
 	Legend,
 	Tooltip,
+    LineController,
+    BarController,
 } from 'chart.js';
 import {
 	Chart,
@@ -23,8 +25,10 @@ ChartJS.register(
 	LinearScale,
 	CategoryScale,
 	BarElement,
+	BarController,
 	PointElement,
 	LineElement,
+	LineController,
 	Legend,
 	Tooltip
 );

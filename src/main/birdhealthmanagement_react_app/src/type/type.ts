@@ -42,22 +42,13 @@ export type MonthlyRecord = {
 };
 
 export type CalendarEvent = {
-	id: number;
-	weight: number;
-	mealAmount: number;
-	temperature: number;
-	humidity: number;
-	memo: string;
-};
-
-export type HealthRecordFormType = {
 	id?: number;
 	weight: number;
 	mealAmount: number;
 	temperature: number;
 	humidity: number;
 	memo: string;
-}
+};
 
 interface Contact {
 	id: number;

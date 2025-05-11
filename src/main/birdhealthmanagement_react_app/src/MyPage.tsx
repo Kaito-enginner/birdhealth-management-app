@@ -41,7 +41,7 @@ const MyPage = ({ handleSelectedBird, selectedBird, setSelectedBird, userBirds, 
 
 	// ユーザー＋愛鳥さんの情報を取得
 	useEffect(() => {
-		fetch(`${BASE_URL}/mypage`, {
+		fetch(`${BASE_URL}/api/mypage`, {
 			method: 'GET',
 			credentials: 'include'
 		})

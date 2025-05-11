@@ -20,7 +20,7 @@ const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selec
 
 	// ユーザー＋愛鳥情報を取得
 	useEffect(() => {
-			    fetch(`${BASE_URL}/mypage`, {
+			    fetch(`${BASE_URL}/api/mypage`, {
 					method: 'GET',
 					credentials: 'include'
 				})

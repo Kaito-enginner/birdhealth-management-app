@@ -4,8 +4,8 @@ INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_ADMIN');
 
 
 -- usersテーブル
-INSERT IGNORE INTO users (id, name, email, password, consecutive_login_days, role_id) VALUES (1, '山田太郎', 'taro.yamada@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 15, 1);
-INSERT IGNORE INTO users (id, name, email, password, consecutive_login_days, role_id) VALUES (2, '田中太郎', 'taro.tanaka@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 10, 2);
+INSERT IGNORE INTO users (id, name, email, password, enabled, consecutive_login_days, role_id) VALUES (1, '山田太郎', 'taro.yamada@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', true, 15, 1);
+INSERT IGNORE INTO users (id, name, email, password, enabled, consecutive_login_days, role_id) VALUES (2, '田中太郎', 'taro.tanaka@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', true, 10, 2);
 
 
 -- birdsテーブル

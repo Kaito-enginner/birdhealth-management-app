@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { TextField, Stack, Button, Typography } from '@mui/material';
-import { CalendarEvent, HealthRecordFormType } from '../../type/type'
+import { CalendarEvent } from '../../type/type'
 import { useEffect } from 'react';
 
 interface HealthRecordFormProps {
@@ -15,20 +15,20 @@ interface HealthRecordFormProps {
 
 const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleReRender, selectEvent }: HealthRecordFormProps) => {
 	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-	const { register, control, handleSubmit, setValue, formState: { errors } } = useForm<HealthRecordFormType>({
+	const { control, handleSubmit, setValue, formState: { errors }, reset } = useForm<CalendarEvent>({
 		defaultValues: {
-			id: selectEvent && selectEvent.id,
-			weight: 35,
-			mealAmount: 7,
-			temperature: 25,
-			humidity: 60,
-			memo: '体重OK、食事量OK、温湿度ともに良好'
+			id: selectEvent?.id,
+			weight: 0,
+			mealAmount: 0,
+			temperature: 0,
+			humidity: 0,
+			memo: ''
 		}
 	});
 
 	// 送信処理(健康記録を登録)
-	const submitCreatedHealthRecord: SubmitHandler<HealthRecordFormType> = (data: HealthRecordFormType) => {
-		fetch(`${BASE_URL}/homepage/${birdId}/${clickDate}/register`, {
+	const submitCreatedHealthRecord: SubmitHandler<CalendarEvent> = (data: CalendarEvent) => {
+		fetch(`${BASE_URL}/api/homepage/${birdId}/${clickDate}/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
@@ -39,13 +39,14 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 			.then(() => {
 				handleCalendarModalClose()
 				handleReRender()
+				reset()
 			})
 			.catch(error => console.error("リクエストエラー:", error));
 	}
 
 	// 送信処理(健康記録を編集)
-	const submitEditedHealthRecord: SubmitHandler<HealthRecordFormType> = (data: HealthRecordFormType) => {
-		fetch(`${BASE_URL}/homepage/${birdId}/edit`, {
+	const submitEditedHealthRecord: SubmitHandler<CalendarEvent> = (data: CalendarEvent) => {
+		fetch(`${BASE_URL}/api/homepage/${birdId}/edit`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json' // JSON形式のデータであることを宣言
@@ -56,21 +57,22 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 			.then(() => {
 				handleCalendarModalClose()
 				handleReRender()
+				reset()
 			})
 			.catch(error => console.error("リクエストエラー:", error));
 	}
 
-	useEffect(() => {
-		if (selectEvent) {
-			setValue("id", selectEvent.id)
-			setValue("weight", selectEvent.weight)
-			setValue("mealAmount", selectEvent.mealAmount)
-			setValue("temperature", selectEvent.temperature)
-			setValue("humidity", selectEvent.humidity)
-			setValue("memo", selectEvent.memo)
-		}
-	}, [selectEvent])
-
+		useEffect(() => {
+			if (selectEvent) {
+				setValue("id", selectEvent.id)
+				setValue("weight", selectEvent.weight)
+				setValue("mealAmount", selectEvent.mealAmount)
+				setValue("temperature", selectEvent.temperature)
+				setValue("humidity", selectEvent.humidity)
+				setValue("memo", selectEvent.memo)
+			}
+		}, [selectEvent])
+		
 	return (
 		<Box component={"form"} onSubmit={handleSubmit(selectEvent ? submitEditedHealthRecord : submitCreatedHealthRecord)}>
 			<Stack spacing={2} sx={{ textAlign: 'center' }}>
@@ -89,9 +91,7 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 				{/* 体重 */}
 				<Controller
-					{...register('weight', {
-						required: '体重を入力してください。'
-					})}
+					rules={{ required: "体重を入力してください" }}
 					name='weight'
 					control={control}
 					render={({ field }) => {
@@ -103,9 +103,7 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 				{/* 食事量 */}
 				<Controller
-					{...register('mealAmount', {
-						required: '食事量を入力してください。'
-					})}
+					rules={{ required: "食事量を入力してください" }}
 					name='mealAmount'
 					control={control}
 					render={({ field }) => {
@@ -116,9 +114,7 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 				/>
 				{/* 温度 */}
 				<Controller
-					{...register('temperature', {
-						required: '温度を入力してください。'
-					})}
+					rules={{ required: "温度を入力してください" }}
 					name='temperature'
 					control={control}
 					render={({ field }) => {
@@ -130,9 +126,7 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 				{/* 湿度 */}
 				<Controller
-					{...register('humidity', {
-						required: '湿度を入力してください。',
-					})}
+					rules={{ required: "湿度を入力してください" }}
 					name='humidity'
 					control={control}
 					render={({ field }) => {
@@ -144,13 +138,13 @@ const HealthRecordForm = ({ birdId, handleCalendarModalClose, clickDate, handleR
 
 				{/* メモ */}
 				<Controller
-					{...register('memo', {
-						required: 'メモを入力してください。',
+					rules={{
+						required: "メモを入力してください",
 						maxLength: {
 							value: 50,
 							message: '50文字以内でを入力してください。'
 						}
-					})}
+					}}
 					name='memo'
 					control={control}
 					render={({ field }) => {

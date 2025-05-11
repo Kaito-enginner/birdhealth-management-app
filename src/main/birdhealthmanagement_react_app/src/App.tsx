@@ -16,7 +16,7 @@ import AdminHome from './AdminHome';
 import Management from './Management';
 import Contact from './Contact';
 import PasswordReset from './PasswordReset';
-import AuthProvider, {  } from './components/security/AuthProvider';
+import AuthProvider, { } from './components/security/AuthProvider';
 import AdminAuth from './components/security/AdminAuth';
 
 const App = () => {
@@ -42,7 +42,7 @@ const App = () => {
 	// 特定の愛鳥の特定の日付の健康記録を取得する
 	useEffect(() => {
 		if (birdId && selectedPeriod) {
-			fetch(`${BASE_URL}/chartpage/${birdId}/${selectedPeriod}`, {
+			fetch(`${BASE_URL}/api/chartpage/${birdId}/${selectedPeriod}`, {
 				method: 'GET',
 				credentials: 'include'
 			})
@@ -50,7 +50,6 @@ const App = () => {
 					return res.json()
 				})
 				.then((data) => {
-					console.log("レスポンス内容:", data);
 					return setMonthlyRecords(data)
 				})
 				.catch(error => console.error("リクエストエラー:", error));
@@ -78,7 +77,9 @@ const App = () => {
 						<Route
 							path='/'
 							element={
-								<AppLayout />
+								<AppLayout
+									setMonthlyRecords={setMonthlyRecords}
+								/>
 							}
 						>
 							<Route
@@ -95,6 +96,10 @@ const App = () => {
 										handleReRender={handleReRender}
 										message={message}
 										setMessage={setMessage}
+										openDialog={openDialog}
+										setOpenDialog={setOpenDialog}
+										dialogMessage={dialogMessage}
+										setDialogMessage={setDialogMessage}
 									/>
 								}
 							/>
@@ -145,7 +150,7 @@ const App = () => {
 							<Route path='*' element={<NoMatch />} />
 						</Route>
 
-						<Route path=':role' element={<AppLayout />}>
+						<Route path=':role' element={<AppLayout setMonthlyRecords={setMonthlyRecords}/>}>
 							<Route path='Home' element={
 								<AdminAuth>
 									<AdminHome />

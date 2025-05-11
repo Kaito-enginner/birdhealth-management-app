@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.birdhealth_management.dto.PasswordResetRequestDto;
 import com.example.birdhealth_management.service.UserService;
 
 @RestController
 //@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
-@RequestMapping("/reset")
+@RequestMapping("/api/reset")
 public class PasswordResetController {
 	private final UserService userService;
 	
@@ -19,7 +18,7 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping
-	public void passwordResetReception(@RequestBody PasswordResetRequestDto email) {
+	public void passwordResetReception(@RequestBody String email) {
 		userService.passwordReset(email);
 	}
 }

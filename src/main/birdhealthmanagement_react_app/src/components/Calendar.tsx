@@ -5,7 +5,7 @@ import jaLocale from "@fullcalendar/core/locales/ja"; // 日本語対応
 import { Box, Modal, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CalendarEvent, MonthlyRecord, UserBirdDto } from "../type/type";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { modalStyle } from "../theme/theme";
 import HealthRecordForm from "./form/HealthRecordForm";
 import { DateClickArg } from "@fullcalendar/interaction";
@@ -60,17 +60,13 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 		}
 	})
 
-	useEffect(() => {
-
-	})
-
 	// イベントをクリックしたときの処理
 	const onClickEvent = (eventDetail: EventClickArg) => {
 		const extended = eventDetail.event.extendedProps
 		const eventId = parseInt(eventDetail.event.id)
 		const fullEvent: CalendarEvent = {
 			id: eventId,
-			weight: extended.weigt,
+			weight: extended.weight,
 			mealAmount: extended.mealAmount,
 			temperature: extended.temperature,
 			humidity: extended.humidity,

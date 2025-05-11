@@ -31,6 +31,9 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "enabled")
+	private Boolean enabled;
+	
 	@Column(name = "consecutive_login_days")
 	private Integer consecutive_login_days;
 

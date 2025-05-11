@@ -20,26 +20,26 @@ public class BirdService {
 	}
 
 	@Transactional
-	public void create(User user, Bird birdData) {
+	public void create(User user, Bird bird) {
 		Bird newBird = new Bird();
 		
 		newBird.setUserId(user);
-		newBird.setName(birdData.getName());
-		newBird.setGender(birdData.getGender());
-		newBird.setBirthday(birdData.getBirthday());
-		newBird.setBestWeight(birdData.getBestWeight());
+		newBird.setName(bird.getName());
+		newBird.setGender(bird.getGender());
+		newBird.setBirthday(bird.getBirthday());
+		newBird.setBestWeight(bird.getBestWeight());
 
 		birdRepository.save(newBird);
 	}
 
 	@Transactional
-	public void update(Bird birdData) {
-		Bird updateBird = birdRepository.getReferenceById(birdData.getId());
+	public void update(Bird bird) {
+		Bird updateBird = birdRepository.getReferenceById(bird.getId());
 
-		updateBird.setName(birdData.getName());
-		updateBird.setGender(birdData.getGender());
-		updateBird.setBirthday(birdData.getBirthday());
-		updateBird.setBestWeight(birdData.getBestWeight());
+		updateBird.setName(bird.getName());
+		updateBird.setGender(bird.getGender());
+		updateBird.setBirthday(bird.getBirthday());
+		updateBird.setBestWeight(bird.getBestWeight());
 
 		birdRepository.save(updateBird);
 	}

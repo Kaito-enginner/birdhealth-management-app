@@ -34,7 +34,7 @@ const PassWordEditForm = ({ handleClose }:PassWordEditFormProps) => {
 
 	// 送信処理(パスワードを編集)
 	const submitEditedPassword: SubmitHandler<PasswordEditFormType> = (data: PasswordEditFormType) => {
-		fetch(`${BASE_URL}/mypage/useredit/pass`, {
+		fetch(`${BASE_URL}/api/mypage/useredit/pass`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

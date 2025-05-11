@@ -8,13 +8,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Outlet } from 'react-router-dom';
 import SideBar from '../common/SideBar';
+import { MonthlyRecord } from '../../type/type';
 const drawerWidth = 240;
 
-//interface AppLayoutProps {
-//	userRole: "GENERAL" | "ADMIN" | null;
-//}
+interface AppLayoutProps {
+	setMonthlyRecords: React.Dispatch<React.SetStateAction<MonthlyRecord[] | undefined>>;
+}
 
-export default function AppLayout() {
+export default function AppLayout({ setMonthlyRecords }: AppLayoutProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -67,6 +68,7 @@ export default function AppLayout() {
 		mobileOpen={mobileOpen} 
 		handleDrawerTransitionEnd={handleDrawerTransitionEnd}
 		handleDrawerClose={handleDrawerClose}
+		setMonthlyRecords={setMonthlyRecords}
 	   />
 	  
 	  {/*メインコンテンツ*/}

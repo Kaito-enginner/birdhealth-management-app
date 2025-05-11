@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
    name VARCHAR(255) NOT NULL, 
    email VARCHAR(255) NOT NULL,  
    password VARCHAR(255) NOT NULL,
+   enabled BOOLEAN NOT NULL,
    consecutive_login_days INT NOT NULL,
    role_id INT NOT NULL,
    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

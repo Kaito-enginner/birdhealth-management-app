@@ -36,7 +36,7 @@ const SignUp = () => {
 		event.preventDefault();
 	};
 	const createUser: SubmitHandler<UserFormType> = (data: UserFormType) => {
-		fetch(`${BASE_URL}/signup`, {
+		fetch(`${BASE_URL}/api/signup`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

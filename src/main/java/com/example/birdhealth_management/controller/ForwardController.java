@@ -15,4 +15,9 @@ public class ForwardController {
 	public String forward() {
 		return "forward:/dist/index.html";
 	}
+	
+	@RequestMapping("/api/**")
+  public void apiForward() {
+		
+  }
 }

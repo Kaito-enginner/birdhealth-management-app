@@ -1,6 +1,7 @@
-import { Box, Button, Paper, Stack, TextField, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { ContactFormType } from "../../type/type"
+import MessageMoadal from "../MessageModal";
 
 interface ContactFormProps {
 	openDialog: boolean;
@@ -16,15 +17,10 @@ export const ContactForm = ({ openDialog, setOpenDialog, dialogMessage, setDialo
 			content: ''
 		}
 	})
-	
-	// フォーカスをはずす
-	const removeForcus = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
-		e.currentTarget.blur();
-	}
 
 	// 送信処理(お問い合わせ内容を送信)
 	const submitContactInformation: SubmitHandler<ContactFormType> = (data: ContactFormType) => {
-		fetch(`${BASE_URL}$/contactpage`, {
+		fetch(`${BASE_URL}/api/contactpage`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -90,20 +86,11 @@ export const ContactForm = ({ openDialog, setOpenDialog, dialogMessage, setDialo
 					</Stack>
 				</form>
 			</Paper>
-			<Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-				<DialogTitle>お知らせ</DialogTitle>
-				<DialogContent>
-					<DialogContentText>{dialogMessage}</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={(e) => {
-						removeForcus(e)
-						setOpenDialog(false)
-					}}>
-						閉じる
-					</Button>
-				</DialogActions>
-			</Dialog>
+			<MessageMoadal
+				openDialog={openDialog}
+				setOpenDialog={setOpenDialog}
+				dialogMessage={dialogMessage}
+			/>
 		</Box>
 	)
 }

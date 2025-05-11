@@ -1,13 +1,15 @@
 import { createContext, useContext, useState } from "react";
 
 type AuthContextType = {
-  roleState: string | null;
-  setRole: (newRole: string | null) => void;
+	roleState: string | null;
+	setRole: (newRole: string | null) => void;
 };
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const [roleState, setRoleState] = useState<string | null>(null);
+	const [roleState, setRoleState] = useState<string | null>(() => {
+		return sessionStorage.getItem("role");
+	});
 
 	const setRole = (newRole: string | null) => {
 		if (newRole) {

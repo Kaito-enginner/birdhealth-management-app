@@ -1,13 +1,14 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-
+import MessageMoadal from './components/MessageModal';
 
 
 interface UserType {
 	id: number;
 	name: string;
 	email: string;
+	enabled: boolean;
 	consecutive_login_days: number;
 	createdAt: string;
 	updatedAt: string;
@@ -26,13 +27,8 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 	const [users, setUsers] = useState<UserType[]>([])
 	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-	// フォーカスをはずす
-	const removeForcus = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		e.currentTarget.blur();
-	}
-
 	useEffect(() => {
-		fetch(`${BASE_URL}/managementpage`, {
+		fetch(`${BASE_URL}/api/managementpage`, {
 			method: 'GET',
 			credentials: 'include'
 		})
@@ -56,7 +52,7 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 	}, [users])
 
 	const handleDelete = (id: number) => {
-		fetch(`${BASE_URL}/managementpage/delete`, {
+		fetch(`${BASE_URL}/api/managementpage/delete`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: {
@@ -65,22 +61,35 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 			body: JSON.stringify(id),
 		})
 			.then(async response => {
-				console.log(response)
 				if (!response.ok) {
-					throw new Error("送信に失敗しました")
+					return response.text().then(errorMessage => {
+						throw new Error(errorMessage);
+					});
 				}
 				handleReRender()
 				const message = await response.text()
 				setDialogMessage(message)
 				setOpenDialog(true)
 			})
-			.catch(error => console.error("リクエストエラー:", error));
+			.catch(error => {
+				console.error("エラー発生:", error.message);
+				setDialogMessage(error.message);
+			});
 	}
 
 	const columns: GridColDef[] = [
 		{ field: 'id', headerName: 'ID', sortable: false, width: 70 },
 		{ field: 'name', headerName: '名前', sortable: false, width: 150 },
 		{ field: 'email', headerName: 'メールアドレス', sortable: false, width: 300 },
+		{
+			field: 'enabled',
+			headerName: '状態',
+			sortable: false,
+			width: 150,
+			renderCell: (params) => (
+				params.row.enabled === true ? "有効" : "無効"
+			)
+		},
 		{ field: 'consecutive_login_days', headerName: 'ログイン日数', sortable: false, width: 150 },
 		{ field: 'updatedAt', headerName: '最終ログイン日', sortable: false, width: 150 },
 		{ field: 'createdAt', headerName: 'アカウント作成日', sortable: false, width: 150 },
@@ -90,14 +99,25 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 			width: 100,
 			sortable: false,
 			renderCell: (params) => (
-				<Button
-					variant="contained"
-					color="error"
-					size="small"
-					onClick={() => handleDelete(params.row.id)}
-				>
-					削除
-				</Button>
+				params.row.enabled === true ?
+					<Button
+						variant="contained"
+						color="error"
+						size="small"
+						onClick={() => handleDelete(params.row.id)}
+					>
+						無効化
+					</Button>
+					:
+					<Button
+						variant="contained"
+						color="success"
+						size="small"
+						onClick={() => handleDelete(params.row.id)}
+					>
+						有効化
+					</Button>
+
 			)
 		}
 	];
@@ -116,20 +136,11 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 					sx={{ border: 0 }}
 				/>
 			</Paper>
-			<Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-				<DialogTitle>お知らせ</DialogTitle>
-				<DialogContent>
-					<DialogContentText>{dialogMessage}</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={(e) => {
-						removeForcus(e)
-						setOpenDialog(false)
-					}}>
-						閉じる
-					</Button>
-				</DialogActions>
-			</Dialog>
+			<MessageMoadal
+				openDialog={openDialog}
+				setOpenDialog={setOpenDialog}
+				dialogMessage={dialogMessage}
+			/>
 		</Box>
 	)
 }

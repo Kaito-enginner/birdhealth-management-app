@@ -15,7 +15,7 @@ import com.example.birdhealth_management.service.ContactService;
 
 @RestController
 //@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
-@RequestMapping("/adminhomepage")
+@RequestMapping("/api/adminhomepage")
 public class AdminHomeController {
 	private final ContactRepository contactRepository;
 	private final ContactService contactService;

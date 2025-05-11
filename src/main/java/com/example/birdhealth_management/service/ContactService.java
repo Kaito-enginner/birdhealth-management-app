@@ -21,9 +21,9 @@ public class ContactService {
 	}
 
 	@Transactional
-	public void create(User loginUser, Contact contact) {
+	public void create(User user, Contact contact) {
 		Contact newContact = new Contact();
-		newContact.setUserId(loginUser);
+		newContact.setUserId(user);
 		newContact.setEmail(contact.getEmail());
 		newContact.setContent(contact.getContent());
 		newContact.setStatus(false);

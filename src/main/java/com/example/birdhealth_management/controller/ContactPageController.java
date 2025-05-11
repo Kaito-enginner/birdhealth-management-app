@@ -2,7 +2,6 @@ package com.example.birdhealth_management.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,8 @@ import com.example.birdhealth_management.service.ContactService;
 import com.example.birdhealth_management.service.EmailService;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
-@RequestMapping("/contactpage")
+//@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
+@RequestMapping("/api/contactpage")
 public class ContactPageController {
 private final ContactService contactService;
 private final EmailService emailService;

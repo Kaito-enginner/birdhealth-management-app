@@ -21,7 +21,7 @@ const PasswordReset = () => {
 	})
 
 	const emaiSubmit: SubmitHandler<EmailResetFormType> = (data: EmailResetFormType) => {
-		fetch(`${BASE_URL}/reset`, {
+		fetch(`${BASE_URL}/api/reset`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
