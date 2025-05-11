@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.birdhealth_management.dto.PasswordResetRequestDto;
 import com.example.birdhealth_management.service.UserService;
 
 @RestController
@@ -18,7 +19,7 @@ public class PasswordResetController {
 	}
 	
 	@PostMapping
-	public void passwordResetReception(@RequestBody String email) {
-		userService.passwordReset(email);
+	public void passwordResetReception(@RequestBody PasswordResetRequestDto emailDto) {
+		userService.passwordReset(emailDto);
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.birdhealth_management.dto.PasswordResetRequestDto;
 import com.example.birdhealth_management.dto.UserDto;
 import com.example.birdhealth_management.entity.Role;
 import com.example.birdhealth_management.entity.User;
@@ -85,10 +86,11 @@ public class UserService {
 
 	// 仮パスワード発行
 	@Transactional
-	public void passwordReset(String email) {
+	public void passwordReset(PasswordResetRequestDto emailDto) {
+		String email = emailDto.getEmail();
 		User updateUser = userRepository.findByEmail(email);
 
-		if (Objects.isNull(updateUser)) {
+		if (updateUser == null) {
 			throw new EmailNotFoundException("該当のメールアドレスが見つかりません。");
 		}
 

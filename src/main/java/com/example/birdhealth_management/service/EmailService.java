@@ -30,7 +30,7 @@ public class EmailService {
 		String subject = "仮パスワードを発行しました。";
 		String text = "下記のパスワードを用いてログインし、直ちにパスワードの再設定をお願いいたします。";
 
-		message.setFrom("hatopegu@fuwari.bem");
+		message.setFrom("hatopegu@fuwari.be");
 		message.setTo(email);
 		message.setSubject(subject);
 		message.setText(text + "\n" + "パスワード：" + token);
