@@ -18,7 +18,7 @@ public class EmailService {
 		String text = "お問い合わせの内容を確認して対応してください。";
 
 		message.setFrom("hatopegu@fuwari.be");
-		message.setTo("taro.tanaka@example.com");
+		message.setTo(email);
 		message.setSubject(subject);
 		message.setText(text + "\n" + email + "\n" + "お問い合わせ内容：" + content);
 		mailSender.send(message);
