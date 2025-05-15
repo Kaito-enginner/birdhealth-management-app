@@ -3,9 +3,9 @@ export const yearMonthCalcuration = (birthday: string) => {
 	const currentYear = currentDate.getFullYear();
 	const currentMonth = currentDate.getMonth() + 1;
 
-	const dateTypeBirthday = new Date(birthday)
-	let year = dateTypeBirthday.getFullYear()
-	let month = dateTypeBirthday.getMonth()
+	const dateTypeBirthday = new Date(birthday);
+	let year = dateTypeBirthday.getFullYear();
+	let month = dateTypeBirthday.getMonth() + 1;
 
 	const result = [];
 
