@@ -15,7 +15,7 @@ import Divider from '@mui/material/Divider';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { Logout } from "../Logout";
 import { useAuth } from '../security/AuthProvider';
-import { MonthlyRecord } from '../../type/type';
+import { Bird, MonthlyRecord } from '../../type/type';
 
 interface SideBarProps {
 	drawerWidth: number;
@@ -23,6 +23,7 @@ interface SideBarProps {
 	handleDrawerTransitionEnd: () => void;
 	handleDrawerClose: () => void;
 	setMonthlyRecords: React.Dispatch<React.SetStateAction<MonthlyRecord[] | undefined>>;
+	setSelectedBird: React.Dispatch<React.SetStateAction<Bird | undefined>>
 }
 
 interface menuItem {
@@ -31,7 +32,7 @@ interface menuItem {
 	icon: React.ComponentType
 }
 
-const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose, setMonthlyRecords }: SideBarProps) => {
+const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDrawerClose, setMonthlyRecords, setSelectedBird }: SideBarProps) => {
 	const { setRole } = useAuth();
 	const { role } = useParams(); // URLからroleを取得
 	const navigate = useNavigate();
@@ -42,6 +43,7 @@ const SideBar = ({ drawerWidth, mobileOpen, handleDrawerTransitionEnd, handleDra
 			await Logout();
 			setRole(null);
 			setMonthlyRecords([])
+			setSelectedBird(undefined)
 			sessionStorage.clear();
 			navigate("/");
 		} catch (error) {

@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import Calendar from "./components/Calendar";
-import { MonthlyRecord, UserBirdDto } from "./type/type";
+import { Bird, MonthlyRecord, UserBirdDto } from "./type/type";
 import { Box, SelectChangeEvent } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import MessageMoadal from "./components/MessageModal";
+import MessageDialog from "./components/MessageDialog";
 
 interface HomeProps {
 	monthlyRecords: MonthlyRecord[] | undefined;
 	userBirds: UserBirdDto | undefined;
 	setUserBirds: React.Dispatch<React.SetStateAction<UserBirdDto | undefined>>;
-	birdId: number | undefined;
 	birdHandleChange: (e: SelectChangeEvent) => void;
 	reRender: boolean;
 	setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>;
@@ -20,10 +19,11 @@ interface HomeProps {
 	setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 	dialogMessage: string;
 	setDialogMessage: React.Dispatch<React.SetStateAction<string>>;
+	selectedBird: Bird | undefined;
 }
 
-const Home = ({ monthlyRecords, userBirds, setUserBirds, birdId, birdHandleChange, reRender,
-	setSelectedPeriod, handleReRender, openDialog, setOpenDialog, dialogMessage, setDialogMessage}: HomeProps) => {
+const Home = ({ monthlyRecords, userBirds, setUserBirds, birdHandleChange, reRender,setSelectedPeriod,
+	 handleReRender, openDialog, setOpenDialog, dialogMessage, setDialogMessage, selectedBird }: HomeProps) => {
 	const location = useLocation();
 	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -54,14 +54,18 @@ const Home = ({ monthlyRecords, userBirds, setUserBirds, birdId, birdHandleChang
 		<Box>
 			<Calendar
 				monthlyRecords={monthlyRecords}
-				birdId={birdId}
 				userBirds={userBirds}
 				birdHandleChange={birdHandleChange}
 				setSelectedPeriod={setSelectedPeriod}
 				handleReRender={handleReRender}
+				openDialog={openDialog}
+				setOpenDialog={setOpenDialog}
+				dialogMessage={dialogMessage}
+				setDialogMessage={setDialogMessage}
+				selectedBird={selectedBird}
 			/>
 
-			<MessageMoadal
+			<MessageDialog
 				openDialog={openDialog}
 				setOpenDialog={setOpenDialog}
 				dialogMessage={dialogMessage}

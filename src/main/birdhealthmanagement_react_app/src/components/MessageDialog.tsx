@@ -1,12 +1,12 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { } from "react";
 
-interface MessageMoadalProps {
+interface MessageDialogProps {
 	openDialog: boolean;
 	setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
 	dialogMessage: string;
 }
-const MessageMoadal = ({ openDialog, setOpenDialog, dialogMessage }: MessageMoadalProps) => {
+const MessageDialog = ({ openDialog, setOpenDialog, dialogMessage }: MessageDialogProps) => {
 
 	const removeForcus = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.currentTarget.blur();
@@ -32,4 +32,4 @@ const MessageMoadal = ({ openDialog, setOpenDialog, dialogMessage }: MessageMoad
 	)
 }
 
-export default MessageMoadal
+export default MessageDialog

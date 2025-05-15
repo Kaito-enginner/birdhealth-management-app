@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { MonthlyRecord, UserBirdDto } from "./type/type";
+import { BirdFormType, MonthlyRecord, UserBirdDto } from "./type/type";
 import { BirdChart } from "./components/BirdChart";
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Box } from "@mui/material";
@@ -9,13 +9,13 @@ interface ChartPrps {
 	setUserBirds: React.Dispatch<React.SetStateAction<UserBirdDto | undefined>>;
 	reRender: boolean;
 	monthlyRecords: MonthlyRecord[] | undefined;
-	birdId: number | undefined;
 	selectedPeriod: string;
 	setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>;
 	birdHandleChange: (e: SelectChangeEvent) => void;
+	selectedBird: BirdFormType | undefined
 }
 
-const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selectedPeriod, setSelectedPeriod, birdHandleChange}: ChartPrps) => {
+const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, selectedPeriod, setSelectedPeriod, birdHandleChange, selectedBird}: ChartPrps) => {
 	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 	// ユーザー＋愛鳥情報を取得
@@ -37,10 +37,10 @@ const Chart = ({userBirds, setUserBirds, reRender, monthlyRecords, birdId, selec
 			<BirdChart 
 			userBirds={userBirds} 
 			monthlyRecords={monthlyRecords}
-			birdId={birdId}
 			selectedPeriod={selectedPeriod}
 			setSelectedPeriod={setSelectedPeriod}
 			birdHandleChange={birdHandleChange}
+			selectedBird={selectedBird}
 			/>
 		</Box>
 	)

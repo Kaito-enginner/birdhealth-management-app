@@ -1,6 +1,5 @@
 export interface Bird {
 	id: number;
-	userId: number
 	name: string;
 	gender: string;
 	birthday: string;

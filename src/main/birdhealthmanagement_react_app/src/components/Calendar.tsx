@@ -3,7 +3,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"; // 月間カレンダー
 import interactionPlugin from "@fullcalendar/interaction"; // ユーザー操作対応
 import jaLocale from "@fullcalendar/core/locales/ja"; // 日本語対応
 import { Box, Modal, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { CalendarEvent, MonthlyRecord, UserBirdDto } from "../type/type";
+import { Bird, CalendarEvent, MonthlyRecord, UserBirdDto } from "../type/type";
 import { format } from "date-fns";
 import { useState } from "react";
 import { modalStyle } from "../theme/theme";
@@ -12,22 +12,28 @@ import { DateClickArg } from "@fullcalendar/interaction";
 import { EventContentArg } from "@fullcalendar/core";
 import { DatesSetArg } from "@fullcalendar/core";
 import { EventClickArg } from "@fullcalendar/core";
+import MessageDialog from "./MessageDialog";
 
 
 interface CalendarProps {
 	monthlyRecords: MonthlyRecord[] | undefined;
 	userBirds: UserBirdDto | undefined;
-	birdId: number | undefined;
 	birdHandleChange: (e: SelectChangeEvent) => void;
 	setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>;
 	handleReRender: () => void;
+	openDialog: boolean;
+	setOpenDialog: React.Dispatch<React.SetStateAction<boolean>>;
+	dialogMessage: string;
+	setDialogMessage: React.Dispatch<React.SetStateAction<string>>;
+	selectedBird: Bird | undefined;
 }
 
-const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSelectedPeriod, handleReRender }: CalendarProps) => {
+const Calendar = ({ monthlyRecords, userBirds, birdHandleChange, setSelectedPeriod, handleReRender,
+	 openDialog, setOpenDialog, dialogMessage, setDialogMessage, selectedBird }: CalendarProps) => {
 	const FullCalendarComponent = FullCalendar as unknown as React.ComponentType<any>;
-	const [selectEvent, setSelectEvent] = useState<CalendarEvent>()
+	const [selectEvent, setSelectEvent] = useState<CalendarEvent>();
 	const [calendarModalOpen, setCalendarModalOpen] = useState(false);
-	const [clickDate, setClickDate] = useState<string>()
+	const [clickDate, setClickDate] = useState<string>();
 
 	// モーダルを開ける処理
 	const handleCalendarModalOpen = () => {
@@ -62,24 +68,36 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 
 	// イベントをクリックしたときの処理
 	const onClickEvent = (eventDetail: EventClickArg) => {
-		const extended = eventDetail.event.extendedProps
-		const eventId = parseInt(eventDetail.event.id)
-		const fullEvent: CalendarEvent = {
-			id: eventId,
-			weight: extended.weight,
-			mealAmount: extended.mealAmount,
-			temperature: extended.temperature,
-			humidity: extended.humidity,
-			memo: extended.memo,
-		};
-		setSelectEvent(fullEvent)
-		handleCalendarModalOpen()
+		if (selectedBird) {
+			const extended = eventDetail.event.extendedProps
+			const eventId = parseInt(eventDetail.event.id)
+			const fullEvent: CalendarEvent = {
+				id: eventId,
+				weight: extended.weight,
+				mealAmount: extended.mealAmount,
+				temperature: extended.temperature,
+				humidity: extended.humidity,
+				memo: extended.memo,
+			}
+			setSelectEvent(fullEvent)
+			handleCalendarModalOpen()
+		} else {
+			setDialogMessage("愛鳥さんを選択してください")
+			setOpenDialog(true)
+		}
+
 	}
 
 	// 日付をクリックした時の処理
 	const onClickDate = (date: DateClickArg) => {
-		setClickDate(date.dateStr)
-		handleCalendarModalOpen()
+		if (selectedBird) {
+			setClickDate(date.dateStr)
+			handleCalendarModalOpen()
+		} else {
+			setDialogMessage("愛鳥さんを選択してください")
+			setOpenDialog(true)
+		}
+
 	}
 
 
@@ -108,12 +126,12 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 						<Select
 							labelId="bird-select-label"
 							id="bird-simple-select"
-							value={birdId ? birdId.toString() : ''}
+							value={selectedBird ? selectedBird.name : ''}
 							label="bird"
 							onChange={birdHandleChange}
 						>
 							{userBirds && userBirds.birds.map((bird, index) => (
-								<MenuItem key={index} value={bird.id}>{bird.name}</MenuItem>
+								<MenuItem key={index} value={bird.name}>{bird.name}</MenuItem>
 							))}
 						</Select>
 					</FormControl>
@@ -135,7 +153,7 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 			>
 				<Box sx={modalStyle}>
 					<HealthRecordForm
-						birdId={birdId}
+						selectedBird={selectedBird}
 						handleCalendarModalClose={handleCalendarModalClose}
 						clickDate={clickDate}
 						handleReRender={handleReRender}
@@ -143,6 +161,11 @@ const Calendar = ({ monthlyRecords, userBirds, birdId, birdHandleChange, setSele
 					/>
 				</Box>
 			</Modal>
+			<MessageDialog
+				openDialog={openDialog}
+				setOpenDialog={setOpenDialog}
+				dialogMessage={dialogMessage}
+			/>
 		</Box>
 	)
 }

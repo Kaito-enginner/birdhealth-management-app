@@ -3,14 +3,14 @@ import BirdRegsterForm from './components/form/BirdRegisterForm';
 import PassWordEditForm from './components/form/PassWordEditForm';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
-import { BirdFormType, UserBirdDto } from "./type/type";
+import { UserBirdDto, Bird } from "./type/type";
 import { UserAndBirdInformation } from "./components/UserAndBirdInformation";
 import UserEditForm from "./components/form/UserEditForm";
 
 interface MyPageProps {
-	handleSelectedBird: (bird: BirdFormType) => void;
-	selectedBird: BirdFormType | undefined;
-	setSelectedBird: React.Dispatch<React.SetStateAction<BirdFormType | undefined>>;
+	handleSelectedBird: (bird: Bird) => void
+	selectedBird: Bird | undefined;
+	setSelectedBird: React.Dispatch<React.SetStateAction<Bird | undefined>>;
 	userBirds: UserBirdDto | undefined;
 	setUserBirds: React.Dispatch<React.SetStateAction<UserBirdDto | undefined>>;
 	reRender: boolean;

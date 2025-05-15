@@ -9,7 +9,7 @@ import AppLayout from './components/layout/AppLayout';
 import { theme } from './theme/theme'
 import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline';
-import { BirdFormType, MonthlyRecord, UserBirdDto } from './type/type'
+import { Bird, MonthlyRecord, UserBirdDto } from './type/type'
 import NoMatch from './NoMatch';
 import { SelectChangeEvent } from '@mui/material/Select';
 import AdminHome from './AdminHome';
@@ -21,19 +21,22 @@ import AdminAuth from './components/security/AdminAuth';
 
 const App = () => {
 	const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-	const [selectedBird, setSelectedBird] = useState<BirdFormType>()
-	const handleSelectedBird = (bird: BirdFormType): void => setSelectedBird(bird)
+	const [selectedBird, setSelectedBird] = useState<Bird>()
 	const [userBirds, setUserBirds] = useState<UserBirdDto>();
 	const [reRender, setReRender] = useState(false);
 	const [monthlyRecords, setMonthlyRecords] = useState<MonthlyRecord[]>();
-	const [birdId, setBirdId] = useState<number>();
 	const [selectedPeriod, setSelectedPeriod] = useState('');
-	const [message, setMessage] = useState("");
+	const [message, setMessage] = useState('');
 	const [openDialog, setOpenDialog] = useState(false);
 	const [dialogMessage, setDialogMessage] = useState('');
 
+	const handleSelectedBird = (bird: Bird): void => setSelectedBird(bird)
+
 	const birdHandleChange = (e: SelectChangeEvent) => {
-		setBirdId(parseInt(e.target.value));
+		const selected = userBirds?.birds.find(bird => bird.name === e.target.value);
+		if (selected) {
+			setSelectedBird(selected);
+		}
 	};
 
 	// 再レンダリング用の処理
@@ -41,8 +44,8 @@ const App = () => {
 
 	// 特定の愛鳥の特定の日付の健康記録を取得する
 	useEffect(() => {
-		if (birdId && selectedPeriod) {
-			fetch(`${BASE_URL}/api/chartpage/${birdId}/${selectedPeriod}`, {
+		if (selectedBird && selectedPeriod) {
+			fetch(`${BASE_URL}/api/chartpage/${selectedBird.id}/${selectedPeriod}`, {
 				method: 'GET',
 				credentials: 'include'
 			})
@@ -54,7 +57,7 @@ const App = () => {
 				})
 				.catch(error => console.error("リクエストエラー:", error));
 		}
-	}, [birdId, selectedPeriod, reRender]);
+	}, [selectedBird, selectedPeriod, reRender]);
 
 
 	return (
@@ -79,6 +82,7 @@ const App = () => {
 							element={
 								<AppLayout
 									setMonthlyRecords={setMonthlyRecords}
+									setSelectedBird={setSelectedBird}
 								/>
 							}
 						>
@@ -87,7 +91,6 @@ const App = () => {
 								element={
 									<Home
 										monthlyRecords={monthlyRecords}
-										birdId={birdId}
 										userBirds={userBirds}
 										setUserBirds={setUserBirds}
 										birdHandleChange={birdHandleChange}
@@ -100,6 +103,7 @@ const App = () => {
 										setOpenDialog={setOpenDialog}
 										dialogMessage={dialogMessage}
 										setDialogMessage={setDialogMessage}
+										selectedBird={selectedBird}
 									/>
 								}
 							/>
@@ -127,10 +131,10 @@ const App = () => {
 										setUserBirds={setUserBirds}
 										reRender={reRender}
 										monthlyRecords={monthlyRecords}
-										birdId={birdId}
 										selectedPeriod={selectedPeriod}
 										setSelectedPeriod={setSelectedPeriod}
 										birdHandleChange={birdHandleChange}
+										selectedBird={selectedBird}
 									/>
 								}
 							/>
@@ -150,7 +154,12 @@ const App = () => {
 							<Route path='*' element={<NoMatch />} />
 						</Route>
 
-						<Route path=':role' element={<AppLayout setMonthlyRecords={setMonthlyRecords}/>}>
+						<Route path=':role' element={
+							<AppLayout
+								setMonthlyRecords={setMonthlyRecords}
+								setSelectedBird={setSelectedBird}
+							/>
+						}>
 							<Route path='Home' element={
 								<AdminAuth>
 									<AdminHome />

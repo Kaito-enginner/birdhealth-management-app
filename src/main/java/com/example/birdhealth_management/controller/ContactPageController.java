@@ -17,18 +17,19 @@ import com.example.birdhealth_management.service.EmailService;
 //@CrossOrigin(origins = {"http://localhost:5173", "https://birdhealth-management-app-ef0e3e571032.herokuapp.com"})
 @RequestMapping("/api/contactpage")
 public class ContactPageController {
-private final ContactService contactService;
-private final EmailService emailService;
-	
+	private final ContactService contactService;
+	private final EmailService emailService;
+
 	public ContactPageController(ContactService contactService, EmailService emailService) {
 		this.contactService = contactService;
 		this.emailService = emailService;
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<String> contactRegister(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Contact contact) {
-		User loginUser = userDetails.getUser();
-		contactService.create(loginUser, contact);
+	public ResponseEntity<String> contactRegister(@AuthenticationPrincipal UserDetailsImpl userDetails,
+			@RequestBody Contact contact) {
+		User user = userDetails.getUser();
+		contactService.create(user, contact);
 		emailService.sendContactMail(contact.getEmail(), contact.getContent());
 		return ResponseEntity.ok("お問い合わせを受け付けました。");
 	}

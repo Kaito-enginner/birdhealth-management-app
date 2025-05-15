@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Stack, TextField, Typography } from "@mui/material"
 import { Controller, SubmitHandler, useForm } from "react-hook-form"
 import { ContactFormType } from "../../type/type"
-import MessageMoadal from "../MessageModal";
+import MessageDialog from "../MessageDialog";
 
 interface ContactFormProps {
 	openDialog: boolean;
@@ -86,7 +86,7 @@ export const ContactForm = ({ openDialog, setOpenDialog, dialogMessage, setDialo
 					</Stack>
 				</form>
 			</Paper>
-			<MessageMoadal
+			<MessageDialog
 				openDialog={openDialog}
 				setOpenDialog={setOpenDialog}
 				dialogMessage={dialogMessage}

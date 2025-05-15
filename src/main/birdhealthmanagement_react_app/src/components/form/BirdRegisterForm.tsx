@@ -151,7 +151,7 @@ export default function BirdRegsterForm({ selectedBird, handleClose, handleReRen
 						control={control}
 						render={({ field }) => {
 							return (
-								<TextField {...field} label="適正体重" type='number' error={!!errors.bestWeight} helperText={errors.bestWeight?.message as string} />
+								<TextField {...field} label="適正体重(g)" type='number' error={!!errors.bestWeight} helperText={errors.bestWeight?.message as string} />
 							)
 						}}
 					/>

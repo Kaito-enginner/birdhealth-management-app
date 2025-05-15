@@ -31,9 +31,9 @@ public class ContactService {
 	}
 	
 	@Transactional
-	public void update(List<Integer> id) {
-		for(int i = 0; i < id.size(); i++) {
-			Contact contacat = contactRepository.getReferenceById(id.get(i));
+	public void update(List<Integer> ids) {
+		for(int i = 0; i < ids.size(); i++) {
+			Contact contacat = contactRepository.getReferenceById(ids.get(i));
 			
 			contacat.setStatus(true);
 			contactRepository.save(contacat);

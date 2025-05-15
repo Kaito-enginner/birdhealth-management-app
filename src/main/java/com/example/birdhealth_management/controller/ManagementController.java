@@ -30,9 +30,9 @@ public class ManagementController {
 
 	@GetMapping
 	public List<UserDto> getManegementPageData() {
-		List<User> allUser = userRepository.findAll();
-		List<UserDto> allUserDto = userService.convertToDto(allUser);
-		return allUserDto;
+		List<User> users = userRepository.findAll();
+		List<UserDto> UserDtos = userService.convertToDto(users);
+		return UserDtos;
 	}
 
 	@PostMapping("/delete")

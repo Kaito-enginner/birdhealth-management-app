@@ -54,8 +54,11 @@ public class UserService {
 
 	@Transactional
 	public void update(User updateuser, User user) {
-		emailDuplicateCheck(user.getEmail());
-
+		String email = user.getEmail();
+		if(!email.equals(updateuser.getEmail())) {
+			emailDuplicateCheck(email);
+		}
+		
 		updateuser.setName(user.getName());
 		updateuser.setEmail(user.getEmail());
 

@@ -35,16 +35,16 @@ public class MyPageController {
 
 	@GetMapping
   public UserBirdDto getMyPageData(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-		User loginUser = userDetails.getUser();
-		List<Bird> birds = birdRepository.findByUserId(loginUser);
+		User user = userDetails.getUser();
+		List<Bird> birds = birdRepository.findByUserId(user);
 		List<BirdDto> birdDtos = birdService.convertToDto(birds);
-		return new UserBirdDto(birdDtos, loginUser.getName(), loginUser.getEmail());
+		return new UserBirdDto(birdDtos, user.getName(), user.getEmail());
   }
 	
 	@PostMapping("/birdregister")
 	public void regiterBird(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody Bird bird) {
-		User loginUser = userDetails.getUser();
-		birdService.create(loginUser, bird);
+		User user = userDetails.getUser();
+		birdService.create(user, bird);
 	}
 	
 	@PostMapping("/birdedit")
@@ -53,15 +53,15 @@ public class MyPageController {
 	}
 	
 	@PostMapping("/useredit")
-	public void editUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User user) {
-		User loginUser = userDetails.getUser();
-		userService.update(loginUser, user);
+	public void editUser(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User userData) {
+		User user = userDetails.getUser();
+		userService.update(user, userData);
 	}
 	
 	@PostMapping("/useredit/pass")
-	public void editUserPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User user) {
-		User loginUser = userDetails.getUser();
-		userService.passwordUpdate(loginUser, user);
+	public void editUserPassword(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody User userData) {
+		User user = userDetails.getUser();
+		userService.passwordUpdate(user, userData);
 	}
 
 }

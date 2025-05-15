@@ -1,7 +1,7 @@
 import { Box, Button, Paper, Typography } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import MessageMoadal from './components/MessageModal';
+import MessageDialog from './components/MessageDialog';
 
 
 interface UserType {
@@ -136,7 +136,7 @@ const Management = ({ openDialog, setOpenDialog, dialogMessage, setDialogMessage
 					sx={{ border: 0 }}
 				/>
 			</Paper>
-			<MessageMoadal
+			<MessageDialog
 				openDialog={openDialog}
 				setOpenDialog={setOpenDialog}
 				dialogMessage={dialogMessage}

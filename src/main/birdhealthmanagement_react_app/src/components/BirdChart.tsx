@@ -1,5 +1,5 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import { MonthlyRecord, UserBirdDto } from "../type/type";
+import { BirdFormType, MonthlyRecord, UserBirdDto } from "../type/type";
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -13,13 +13,14 @@ import {
 	LineElement,
 	Legend,
 	Tooltip,
-    LineController,
-    BarController,
+	LineController,
+	BarController,
 } from 'chart.js';
 import {
 	Chart,
 } from 'react-chartjs-2';
 import { useEffect, useState } from "react";
+import { yearMonthCalcuration } from "./calculation/YearMonthCalcuration";
 
 ChartJS.register(
 	LinearScale,
@@ -51,29 +52,19 @@ export const options = {
 interface BirdChartPrps {
 	userBirds: UserBirdDto | undefined;
 	monthlyRecords: MonthlyRecord[] | undefined;
-	birdId: number | undefined;
 	selectedPeriod: string;
 	setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>;
 	birdHandleChange: (e: SelectChangeEvent) => void;
+	selectedBird: BirdFormType | undefined
 }
 
-export const BirdChart = ({ userBirds, monthlyRecords, birdId, selectedPeriod, setSelectedPeriod, birdHandleChange }: BirdChartPrps) => {
+export const BirdChart = ({ userBirds, monthlyRecords, selectedPeriod, setSelectedPeriod, birdHandleChange, selectedBird }: BirdChartPrps) => {
 	const [chartWidth, setChartWidth] = useState<number>()
+	const [yearMonth, setYearMonth] = useState<{value: string, label: string}[] | []>([])
 	const periodHandleChange = (e: SelectChangeEvent) => {
 		setSelectedPeriod(e.target.value);
 	};
 
-	const currentYear = new Date().getFullYear();
-	const years = Array.from({ length: 6 }, (_, i) => currentYear - 5 + i);
-	const months = Array.from({ length: 12 }, (_, i) => i + 1);
-
-	const yearMonthOptions = years.flatMap((year) =>
-		months.map((month) => {
-			const value = `${year}-${String(month).padStart(2, '0')}`; // 例: 2025-04
-			const label = `${year}年${month}月`;
-			return { value, label };
-		})
-	);
 
 	const monthlyDate = monthlyRecords && monthlyRecords.map((record) => record.day);
 	const monthlyTemperature = monthlyRecords && monthlyRecords.map((record) => record.temperature);
@@ -98,7 +89,7 @@ export const BirdChart = ({ userBirds, monthlyRecords, birdId, selectedPeriod, s
 			{
 				type: 'line' as const,
 				label: '湿度',
-				borderColor: 'rgb(255, 99, 132)',
+				borderColor: 'rgb(99, 187, 255)',
 				borderWidth: 2,
 				fill: false,
 				data: monthlyHumidity ?? [],
@@ -132,6 +123,14 @@ export const BirdChart = ({ userBirds, monthlyRecords, birdId, selectedPeriod, s
 		}
 	}
 
+	useEffect(() => {
+		if (selectedBird) {
+			setYearMonth(yearMonthCalcuration(selectedBird.birthday))
+		}else {
+			setYearMonth([])
+		}
+	}, [selectedBird])
+
 	return (
 		<Box>
 			<Paper sx={{ p: '2rem', mb: '1rem' }}>
@@ -143,12 +142,12 @@ export const BirdChart = ({ userBirds, monthlyRecords, birdId, selectedPeriod, s
 							<Select
 								labelId="bird-select-label"
 								id="bird-simple-select"
-								value={birdId ? birdId.toString() : ''}
+								value={selectedBird ? selectedBird.name : ""}
 								label="bird"
 								onChange={birdHandleChange}
 							>
 								{userBirds && userBirds.birds.map((bird, index) => (
-									<MenuItem key={index} value={bird.id}>{bird.name}</MenuItem>
+									<MenuItem key={index} value={bird.name}>{bird.name}</MenuItem>
 								))}
 							</Select>
 						</FormControl>
@@ -164,11 +163,11 @@ export const BirdChart = ({ userBirds, monthlyRecords, birdId, selectedPeriod, s
 								label="period"
 								onChange={periodHandleChange}
 							>
-								{yearMonthOptions.map((option) => (
-									<MenuItem key={option.value} value={option.value}>
-										{option.label}
-									</MenuItem>
-								))}
+								{yearMonth.map((option) => (
+										<MenuItem key={option.value} value={option.value}>
+											{option.label}
+										</MenuItem>
+									))}
 							</Select>
 						</FormControl>
 					</Grid>

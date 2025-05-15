@@ -8,14 +8,15 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Outlet } from 'react-router-dom';
 import SideBar from '../common/SideBar';
-import { MonthlyRecord } from '../../type/type';
+import { Bird, MonthlyRecord } from '../../type/type';
 const drawerWidth = 240;
 
 interface AppLayoutProps {
 	setMonthlyRecords: React.Dispatch<React.SetStateAction<MonthlyRecord[] | undefined>>;
+	setSelectedBird: React.Dispatch<React.SetStateAction<Bird | undefined>>
 }
 
-export default function AppLayout({ setMonthlyRecords }: AppLayoutProps) {
+export default function AppLayout({ setMonthlyRecords, setSelectedBird }: AppLayoutProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -69,6 +70,7 @@ export default function AppLayout({ setMonthlyRecords }: AppLayoutProps) {
 		handleDrawerTransitionEnd={handleDrawerTransitionEnd}
 		handleDrawerClose={handleDrawerClose}
 		setMonthlyRecords={setMonthlyRecords}
+		setSelectedBird={setSelectedBird}
 	   />
 	  
 	  {/*メインコンテンツ*/}

@@ -25,9 +25,9 @@ public class HealthRecordService {
 	}
 	
 	// 月間の健康記録を取得する
-	public List<HealthRecord> getMonthlyHealthRecord(Integer id, String date) {
+	public List<HealthRecord> getMonthlyHealthRecords(Integer id, String date) {
 		try {
-			Bird bird = birdRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+			Bird bird = birdRepository.findById(id).orElseThrow(() -> new RuntimeException("Bird not found"));
 	    LocalDate localDate = LocalDate.parse(date + "-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 			LocalDate startDate = localDate.with(TemporalAdjusters.firstDayOfMonth());
 			LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
@@ -57,14 +57,14 @@ public class HealthRecordService {
 	
 	@Transactional
 	public void update(HealthRecord healthRecord) {
-		HealthRecord newHealthRecord = healthRecordRepository.getReferenceById(healthRecord.getId());
+		HealthRecord updateHealthRecord = healthRecordRepository.getReferenceById(healthRecord.getId());
 		
-		newHealthRecord.setWeight(healthRecord.getWeight());
-		newHealthRecord.setMealAmount(healthRecord.getMealAmount());
-		newHealthRecord.setHumidity(healthRecord.getHumidity());
-		newHealthRecord.setTemperature(healthRecord.getTemperature());
-		newHealthRecord.setMemo(healthRecord.getMemo());
+		updateHealthRecord.setWeight(healthRecord.getWeight());
+		updateHealthRecord.setMealAmount(healthRecord.getMealAmount());
+		updateHealthRecord.setHumidity(healthRecord.getHumidity());
+		updateHealthRecord.setTemperature(healthRecord.getTemperature());
+		updateHealthRecord.setMemo(healthRecord.getMemo());
 		
-		healthRecordRepository.save(newHealthRecord);
+		healthRecordRepository.save(updateHealthRecord);
 	}
 }

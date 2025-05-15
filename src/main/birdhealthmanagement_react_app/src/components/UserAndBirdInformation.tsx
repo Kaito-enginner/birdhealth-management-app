@@ -1,13 +1,13 @@
 import { Typography, Box, Grid, Paper, Button } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import LockResetIcon from '@mui/icons-material/LockReset';
-import { BirdFormType, UserBirdDto } from "../type/type";
+import { Bird, UserBirdDto } from "../type/type";
 import { ageCalcuration } from './calculation/AgeCalculation';
 
 
 interface UserAndBirdInformationProps {
 	reRender: boolean;
-	handleSelectedBird: (bird: BirdFormType) => void;
+	handleSelectedBird: (bird: Bird) => void
 	handleOpen: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 	userBirds: UserBirdDto | undefined;
 	setSelectedUserEdit: React.Dispatch<React.SetStateAction<boolean>>

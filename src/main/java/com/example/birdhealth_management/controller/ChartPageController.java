@@ -23,7 +23,7 @@ public class ChartPageController {
 	
 	@GetMapping
   public List<HealthRecord> getChartPageData(@PathVariable Integer id, @PathVariable String date) {
-			List<HealthRecord> healthRecord = healthRecordService.getMonthlyHealthRecord(id, date);
-			return healthRecord;
+			List<HealthRecord> healthRecords = healthRecordService.getMonthlyHealthRecords(id, date);
+			return healthRecords;
   }
 }
