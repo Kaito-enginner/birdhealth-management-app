@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/94768173-fdf5-42f3-8f53-f60f8f6a78ef
 
 # 使用技術
 【プログラミング言語】
-● Typescript ver.5.7.2
+● Typescript ver.5.7.2<br>
 ● Java ver.23
 
 【ライブラリ】
