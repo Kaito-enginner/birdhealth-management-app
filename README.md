@@ -11,20 +11,20 @@ https://github.com/user-attachments/assets/94768173-fdf5-42f3-8f53-f60f8f6a78ef
 
 
 # 使用技術
-【プログラミング言語】
+【プログラミング言語】<br>
 ● Typescript ver.5.7.2<br>
 ● Java ver.23
 
-【ライブラリ】
-● React ver.19.0.0
-● FullCalendar ver.6.1.17
-● Material UI ver.7.0.1
+【ライブラリ】<br>
+● React ver.19.0.0<br>
+● FullCalendar ver.6.1.17 <br>
+● Material UI ver.7.0.1 <br>
 ● react-chartjs-2 ver.5.3.0
 
-【フレームワーク】
+【フレームワーク】<br>
 ●SpringBoot ver.3.4.4
 
-【データベース】
+【データベース】<br>
 ●MySQL ver.8.0.40
 
 # 注意事項
